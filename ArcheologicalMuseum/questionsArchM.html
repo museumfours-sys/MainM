@@ -1,1449 +1,1812 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Animal Museum — Questions</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Exhibition Questions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
     <style>
-        html,body{height:100%}
-        body{margin:0;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:center;font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:linear-gradient(135deg,#e0f7fa 0%,#f1f8e9 100%)}
-        body{margin:0;display:flex;align-items:center;justify-content:center;font-family:'Comic Sans MS','Comic Sans',cursive,'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#e0f7fa 0%,#f1f8e9 100%)}
-        .questions-container{background:#fff;padding:2rem;border-radius:20px;box-shadow:0 12px 30px rgba(0,0,0,.12);max-width:520px;width:100%;position:relative}
-        .lang-menu{position:absolute;top:1rem;right:1rem;display:flex;gap:.4rem;align-items:center}
-        .lang-btn{background:#e0f2f1;border:2px solid #80cbc4;padding:.35rem .7rem;border-radius:8px;cursor:pointer}
-        .lang-btn.active{background:#b2dfdb;color:#004d40;border-color:#26a69a}
-        h2{color:#00796b;margin:0 0 1rem 0;text-align:center}
-        .question{background:#e0f7fa;padding:1rem;border-radius:10px;margin-bottom:1rem;text-align:center}
-        input[type=text]{width:90%;padding:.6rem;border-radius:8px;border:2px solid #b2dfdb;height:44px}
-        .controls{display:flex;gap:.6rem;justify-content:center}
-        .btn{padding:.7rem 1.4rem;border-radius:12px;border:none;background:linear-gradient(90deg,#26a69a,#80cbc4);color:#fff;cursor:pointer;font-weight:600}
-        .btn[disabled]{opacity:.5;cursor:not-allowed}
-        .progress-wrap{height:14px;background:#e0f2f1;border-radius:9px;overflow:hidden;margin-bottom:1rem}
-        .progress{height:100%;background:linear-gradient(90deg,#26a69a,#80cbc4);width:0%;transition:width .35s}
-        .option-row{display:flex;align-items:center;gap:.6rem;justify-content:center;margin:.35rem 0}
-        @media(max-width:520px){
-            .questions-container{padding:1.2rem 0.9rem;border-radius:18px;margin:0.5rem;max-width:95vw}
-            h2{font-size:0.95rem;margin-bottom:0.8rem}
-            .question{padding:0.75rem;margin-bottom:0.8rem;font-size:0.9rem}
-            input[type=text]{font-size:0.9rem;width:85%}
-            input[type=radio]{transform:scale(1.2);min-width:18px}
-            .progress-wrap{height:11px;margin-bottom:0.8rem}
-            .controls{gap:0.4rem}
-            .btn{padding:0.6rem 1rem;font-size:0.9rem;border-radius:10px;min-height:44px}
-            .lang-btn{padding:0.25rem 0.5rem;font-size:0.75rem}
-            .option-row{margin:0.3rem 0;gap:0.4rem}
+        :root {
+            --bg-gradient-start: #ffe9d3;
+            --bg-gradient-end: #fffdf6;
+            --card-bg: #ffffff;
+            --accent: #ff9f4a;
+            --accent-soft: #ffe0bf;
+            --accent-soft-2: #fff4e1;
+            --text-main: #3f3a3a;
+            --text-muted: #6e6458;
+            --border-soft: #ffe1c4;
+            --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.08);
+            --radius-card: 28px;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #ffe5c0 0, transparent 55%),
+                radial-gradient(circle at bottom right, #ffe5f0 0, transparent 55%),
+                linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .questions-container {
+            background: var(--card-bg);
+            padding: 2.4rem 2.1rem 2.2rem;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft);
+            max-width: 550px;
+            width: 100%;
+            border: 1px solid var(--border-soft);
+            text-align: center;
+            position: relative;
+            margin: 1.8rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .questions-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 18%;
+            right: 18%;
+            height: 6px;
+            border-radius: 0 0 999px 999px;
+            background: linear-gradient(90deg, #ffb347, #ff9f4a, #ffc46b);
+        }
+
+        /* Corner icons in circles */
+        .corner-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            z-index: 2;
+            pointer-events: none;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .corner-top-left    { top: 10px; left: 14px; }
+        .corner-top-right   { top: 10px; right: 14px; }
+        .corner-bottom-left { bottom: 10px; left: 14px; }
+        .corner-bottom-right{ bottom: 10px; right: 14px; }
+
+        h2 {
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+            font-size: 1.9rem;
+            font-family: "Baloo 2", system-ui, sans-serif;
+        }
+
+        .quiz-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .progress-wrapper {
+            margin-bottom: 1.2rem;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            background: #fff3e3;
+            border-radius: 999px;
+            height: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 180, 94, 0.18);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9f4a, #ffc46b);
+            border-radius: 999px;
+            width: 0%;
+            transition: width 0.3s ease-out;
+        }
+
+        #progress-text {
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .question {
+            margin-bottom: 1.6rem;
+            background: var(--accent-soft-2);
+            border-radius: 18px;
+            padding: 1.2rem 1rem 1rem;
+            border: 1px dashed var(--accent-soft);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            max-width: 320px;
+            height: 44px;
+            padding: 0.7rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid #ffd0a4;
+            font-size: 1rem;
+            background: #fffdf8;
+            margin-bottom: 0.2rem;
+            transition: border 0.18s, box-shadow 0.18s, background 0.18s;
+            text-align: center;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="text"]:focus {
+            border: 1px solid var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 159, 74, 0.25);
+            background: #ffffff;
+        }
+
+        .choice-helper {
+            margin-bottom: 0.6rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            width: 100%;
+        }
+
+        .option-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            transition: opacity 0.18s ease-out;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .option-wrap:active {
+            opacity: 0.8;
+        }
+
+        .option-radio {
+            transform: scale(1.2);
+            margin: 0;
+            accent-color: var(--accent);
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .option-label {
+            font-size: 0.98rem;
+            color: var(--text-main);
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #ff9f4a, #ffb347);
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.98rem;
+            font-weight: 600;
+            box-shadow: 0 10px 22px rgba(255, 159, 74, 0.42);
+            transition: background 0.18s ease-out, transform 0.16s ease-out, box-shadow 0.18s ease-out;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: linear-gradient(90deg, #ff962e, #ffc068);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(255, 159, 74, 0.52);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(1px);
+            box-shadow: 0 6px 16px rgba(255, 159, 74, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ffe3c7;
+            color: #c1a895;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Fade-in animation */
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .questions-container {
+                padding: 1.4rem 0.9rem 1.2rem;
+                border-radius: 20px;
+                margin: 0.6rem 0.4rem;
+                max-width: 95vw;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.15rem;
+            }
+
+            .quiz-subtitle {
+                font-size: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .progress-wrapper {
+                margin-bottom: 0.9rem;
+            }
+
+            .progress-bar-bg {
+                height: 12px;
+            }
+
+            #progress-text {
+                font-size: 0.8rem;
+                margin-top: 0.3rem;
+            }
+
+            .question {
+                margin-bottom: 1rem;
+                padding: 0.8rem 0.7rem;
+            }
+
+            .question label {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            input[type="text"] {
+                max-width: 100%;
+                height: 44px;
+                font-size: 16px;
+                padding: 0.6rem 0.6rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .choice-helper {
+                font-size: 0.8rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .option-group {
+                gap: 0.2rem;
+            }
+
+            .option-wrap {
+                gap: 0.5rem;
+                padding: 0.3rem 0;
+            }
+
+            .option-radio {
+                transform: scale(1.25);
+                min-width: 20px;
+            }
+
+            .option-label {
+                font-size: 0.9rem;
+            }
+
+            .btn-row {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 0.85rem 1.2rem;
+                font-size: 0.9rem;
+                min-height: 44px;
+                border-radius: 20px;
+            }
+
+            .corner-icon {
+                width: 26px;
+                height: 26px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="questions-container">
-        <div class="lang-menu">
-            <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-            <button class="lang-btn" id="btn-bg" onclick="setLang('bg')">BG</button>
-        </div>
+    <div class="questions-container" role="main" aria-labelledby="quiz-title">
 
         <h2 id="quiz-title">Quiz Time!</h2>
+        <div class="quiz-subtitle" id="quiz-subtitle">Answer the questions about our exhibitions.</div>
 
-        <div class="progress-wrap"><div class="progress" id="progress-bar"></div></div>
+        <div class="progress-wrapper">
+            <div class="progress-bar-bg" aria-hidden="true">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div id="progress-text">Question 1 of 5</div>
+        </div>
 
-        <form id="quiz-form">
+        <form id="quiz-form" aria-live="polite">
             <div id="question-area"></div>
-
-            <div class="controls">
-                <button type="button" class="btn" id="next-btn" disabled>Next</button>
-                <button type="submit" class="btn" id="submit-btn" style="display:none">Submit</button>
+            <div class="btn-row">
+                <button
+                    type="button"
+                    class="btn"
+                    id="next-btn"
+                    disabled
+                    aria-label="Go to the next question"
+                >
+                    Next
+                </button>
+                <button
+                    type="submit"
+                    class="btn"
+                    id="submit-btn"
+                    style="display:none;"
+                    disabled
+                    aria-label="Submit your answers and see your result"
+                >
+                    Submit
+                </button>
             </div>
         </form>
     </div>
 
     <script>
+        // Translations
         const translations = {
-            en: { quizTime: "Quiz Time!", next: "Next", submit: "Submit", options: "Choose one option:" },
-            bg: { quizTime: "Време за викторина!", next: "Напред", submit: "Готово", options: "Изберете един отговор:" }
+            en: {
+                quizTime: "Quiz Time!",
+                next: "Next",
+                submit: "Finish",
+                options: "Choose one option:",
+                progress: (current, total) => `Question ${current} of ${total}`
+            },
+            bg: {
+                quizTime: "Ето ги и въпросите!",
+                next: "Напред",
+                submit: "Готово",
+                options: "Изберете един отговор:",
+                progress: (current, total) => `Въпрос ${current} от ${total}`
+            }
         };
 
-        let lang = localStorage.getItem('language') || 'en';
-        function setLang(l){ lang = l; localStorage.setItem('language', l); updateLangUI(); showQuestion(currentQuestion); }
-        function updateLangUI(){
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-bg').classList.toggle('active', lang === 'bg');
-            document.getElementById('quiz-title').textContent = translations[lang].quizTime;
-            document.getElementById('next-btn').textContent = translations[lang].next;
-            document.getElementById('submit-btn').textContent = translations[lang].submit;
-        }
+        const lang = localStorage.getItem('language') || 'en';
 
-        // questions for Animal Museum
+        // Questions
+        // Replace the questionList array with this updated version
+
 const questionList = [
     {
         text: {
-            en: "How many years ago was planet Earth formed?",
-            bg: "Преди около колко години се формира планетата Земя?"
+            en: "What is the longest epoch in human development?",
+            bg: "Коя е най-продължителната епоха в развитието на човечеството?"
         },
         type: "choice",
         options: {
-            en: ["4.5-4.6 billion years", "2000 years", "65 million years", "2000 billion years"],
-            bg: ["4,5 – 4,6 млрд. г.", "2000 г.", "65 млн. г.", "2000 млрд. г."]
+            en: ["Middle Ages", "Antiquity", "Prehistory"],
+            bg: ["Средновековие", "Античност", "Праистория"]
         },
-        answers: ["4.5-4.6 billion years", "4,5 – 4,6 млрд. г."]
+        answers: ["Prehistory", "Праистория"]
     },
-
     {
         text: {
-            en: "In which geological period did life originate on Earth?",
-            bg: "През кой геологичен период възниква животът на Земята?"
+            en: "What did NOT prehistoric coastal settlements engage in?",
+            bg: "С какво не са се занимавали обитателите на праисторическите крайбрежни селища?"
         },
         type: "choice",
         options: {
-            en: ["Jurassic", "Neozoic", "Precambrian", "Devonian"],
-            bg: ["Юра", "Неозой", "Докамбрий", "Девон"]
+            en: ["Agriculture and gathering", "Livestock and hunting", "Coal production"],
+            bg: ["земеделие и събирачество", "скотовъдство и лов", "производство на въглища"]
         },
-        answers: ["Precambrian", "Докамбрий"]
+        answers: ["Coal production", "производство на въглища"]
     },
-
     {
         text: {
-            en: "What happened approximately 65.5 million years ago?",
-            bg: "Какво се случва преди около 65,5 млн. г.?"
+            en: "Which period is part of Prehistory?",
+            bg: "Кой период в развитието на човечеството е част от Праисторията?"
         },
         type: "choice",
         options: {
-            en: ["Mass extinction", "Nothing significant", "First primates appeared", "Earth was formed"],
-            bg: ["масово измиране", "нищо съществено", "появяват се първите примати", "формира се планетата Земя"]
+            en: ["Paleolithic", "Hellenism", "Middle Ages"],
+            bg: ["Палеолит", "Елинизъм", "Средновековие"]
         },
-        answers: ["Mass extinction", "масово измиране"]
+        answers: ["Paleolithic", "Палеолит"]
     },
-
     {
         text: {
-            en: "Deinotherium is a:",
-            bg: "Дейнотериумът е?"
+            en: "Which period is NOT part of Prehistory?",
+            bg: "Кой период в развитието на човечеството не е част от Праисторията?"
         },
         type: "choice",
         options: {
-            en: ["Relative of elephants", "Giant elk", "Giant carnivorous wild boar", "Small prehistoric rodent"],
-            bg: ["роднина на слоновете", "гигантски елен", "вид гигантско хищно диво прасе", "дребен праисторически гризач"]
+            en: ["Neolithic", "Hellenism", "Mesolithic"],
+            bg: ["Неолит", "Елинизъм", "Мезолит"]
         },
-        answers: ["Relative of elephants", "роднина на слоновете"]
+        answers: ["Hellenism", "Елинизъм"]
     },
-
     {
         text: {
-            en: "Mastodon is a:",
-            bg: "Мастодонтът е?"
+            en: "From which epoch date the earliest finds in the Archaeological Exhibition?",
+            bg: "От коя епоха датирт най-ранните находки в Археологическата експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Giant wolf species", "Elk species", "Elephant species", "Marine scorpion species"],
-            bg: ["вид огромен вълк", "вид елен", "вид слон", "вид морски скорпион"]
+            en: ["Paleolithic", "Middle Ages", "Neolithic"],
+            bg: ["Палеолит", "Средновековие", "Неолит"]
         },
-        answers: ["Elephant species", "вид слон"]
+        answers: ["Neolithic", "Неолит"]
     },
-
     {
         text: {
-            en: "True or false: Strandja greenery is found only in Bulgaria?",
-            bg: "Вярно ли е, че Стрянджанската зеленика се среща само в България?"
+            en: "Which object is NOT presented in the Archaeological Exhibition?",
+            bg: "Кой обект не е представен в Археологическата експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Yes, only in Strandja", "No, also found in the Caucasus"],
-            bg: ["Да, среща се само в Странджа", "Не, растението има находища и в Кавказ"]
+            en: ["Ancient and medieval fortress Rusokastro", "Archaeological reserve Kabyle", "Ancient and medieval fortress Poros"],
+            bg: ["антична и средновековна крепост Русокастро", "археологически резерват Кабиле", "антична и средновековна крепост Порос"]
         },
-        answers: ["No, also found in the Caucasus", "Не, растението има находища и в Кавказ"]
+        answers: ["Archaeological reserve Kabyle", "археологически резерват Кабиле"]
     },
-
     {
         text: {
-            en: "What percentage of trees in Strandja are over 100 years old?",
-            bg: "Колко процента от дърветата в Странджа са на възраст над 100 г.?"
+            en: "What is the number of weights in a vertical loom during Prehistory?",
+            bg: "Какъв е броят на тежестите при вертикален тъкачен стан през Праисторията?"
         },
         type: "choice",
         options: {
-            en: ["90%", "30%", "2%"],
-            bg: ["90%", "30%", "2%"]
+            en: ["Even", "Does not matter", "Odd"],
+            bg: ["четен", "няма значение", "нечетен"]
         },
-        answers: ["30%", "30%"]
+        answers: ["Odd", "нечетен"]
     },
-
     {
         text: {
-            en: "The origin of dunes along the Black Sea coast is:",
-            bg: "Произходът на дюните по Черноморското крайбрежие е:"
+            en: "What was the new material for tool production during the Chalcolithic?",
+            bg: "Кой е нововъведеният материал за производство на сечива през Халколита?"
         },
         type: "choice",
         options: {
-            en: ["Erosion of rocks and soil", "Fragmented shell organisms", "Modified black earth soil", "Unclear"],
-            bg: ["от ерозия на скали и почва", "от раздробени черупчести организми", "от видоизменена черноземна почва", "неясен"]
+            en: ["Stone", "Copper – as a metal", "Iron"],
+            bg: ["камък", "мед – като метал", "желязо"]
         },
-        answers: ["Erosion of rocks and soil", "от ерозия на скали и почва"]
+        answers: ["Copper – as a metal", "мед – като метал"]
     },
-
     {
         text: {
-            en: "What percentage of Strandja territory is covered by forests?",
-            bg: "Колко процента от територията на Странджа е заета от гори?"
+            en: "What is the main deity in the Prehistoric pantheon?",
+            bg: "Кое е основното божество в Праисторическия пантеон?"
         },
         type: "choice",
         options: {
-            en: ["100%", "20%", "80%"],
-            bg: ["100%", "20%", "80%"]
+            en: ["The Great Mother Goddess", "Ares", "Neptune"],
+            bg: ["Великата богиня Майка", "Арес", "Нептун"]
         },
-        answers: ["80%", "80%"]
+        answers: ["The Great Mother Goddess", "Великата богиня Майка"]
     },
-
     {
         text: {
-            en: "True or false: Ferns are ancient and primitive plants?",
-            bg: "Вярно ли е, че папратите са древни и примитивни растения?"
+            en: "During which epoch was the grapevine first selectively bred?",
+            bg: "През коя епоха за първи път е селектирана лозата?"
         },
         type: "choice",
         options: {
-            en: ["Yes, appeared in Paleozoic, ~400 million years ago", "No, arose during last ice age, ~10,000 years ago"],
-            bg: ["Да, появяват се още в Палеозоя, преди около 400 млн. г.", "Не, възникват по време на последният ледников период, преди около 10 000 г."]
+            en: ["Hellenism", "Bronze Age", "Mesolithic"],
+            bg: ["Елинизъм", "Бронзова епоха", "Мезолит"]
         },
-        answers: ["Yes, appeared in Paleozoic, ~400 million years ago", "Да, появяват се още в Палеозоя, преди около 400 млн. г."]
+        answers: ["Bronze Age", "Бронзова епоха"]
     },
-
     {
         text: {
-            en: "What is an herb?",
-            bg: "Какво наричаме билка?"
+            en: "Which period of the year is most favorable for sailors in the Black Sea?",
+            bg: "Кой период от годината е най-благоприятен за мореплавателите в Черно море?"
         },
         type: "choice",
         options: {
-            en: ["Plant leaves with medicinal properties", "Plant fruit with medicinal properties", "Plant stem with medicinal properties", "Any part or whole medicinal plant"],
-            bg: ["листа на растение с лечебни свойства", "плод на растение с лечебни свойства", "стебло на растение с лечебни свойства", "както различни части от растението, така и цялото растение"]
+            en: ["April – November", "October – March", "January – April"],
+            bg: ["април – ноември", "октомври – март", "януари – април"]
         },
-        answers: ["Any part or whole medicinal plant", "както различни части от растението, така и цялото растение"]
+        answers: ["April – November", "април – ноември"]
     },
-
     {
         text: {
-            en: "What is the symbol of Strandja?",
-            bg: "Кой е символът на Странджа?"
+            en: "When was the Byzantine Empire the sole ruler of the Black Sea?",
+            bg: "Кога Византийската империя е единствен господар на Черно море?"
         },
         type: "choice",
         options: {
-            en: ["Hairy oak", "Strandja greenery", "Dune of Arkutino", "River Veleka"],
-            bg: ["Косматият дъб", "Странджанската Зеленика", "Дюната на Аркутино", "р. Велека"]
+            en: ["I – III century", "IV – XII century", "XIII – XV century"],
+            bg: ["I в. – III в.", "IV в. – XII в.", "XIII в. – XV в."]
         },
-        answers: ["Strandja greenery", "Странджанската Зеленика"]
+        answers: ["IV – XII century", "IV в. – XII в."]
     },
-
     {
         text: {
-            en: "How many endemic plant species are found in Strandja?",
-            bg: "Колко ендемични вида растения се срещат в Странджа?"
+            en: "In which lake did the dugout canoe, presented in the Archaeological Exhibition, sink?",
+            bg: "В кое езеро е потънала лодката-еднодръвка, представена в Археологическата експозиция?"
         },
         type: "choice",
         options: {
-            en: ["7", "1275", "56"],
-            bg: ["7", "1275", "56"]
+            en: ["Lake Mandrenska", "Lake Burgas – Vaya", "Lake Atanasovsko"],
+            bg: ["Мандренското езеро", "Бургаското езеро – Вая", "Атанасовското езеро"]
         },
-        answers: ["56", "56"]
+        answers: ["Lake Mandrenska", "Мандренското езеро"]
     },
-
     {
         text: {
-            en: "What is Blagun?",
-            bg: "Благун е?"
+            en: "Which artifact is NOT perceived as a means of payment?",
+            bg: "Кой артефакт не се възприема като платежно средство?"
         },
         type: "choice",
         options: {
-            en: ["Known scientist studying Strandja relief", "Type of tree", "Swamp bird", "Type of beetle"],
-            bg: ["известен учен, изследвал релефа на Странджа", "вид дърво", "блатна птица", "вид бръмбар сечко"]
+            en: ["Coin", "Arrow – para", "Kantharos"],
+            bg: ["монета", "стрела – пара", "кантарос"]
         },
-        answers: ["Type of tree", "вид дърво"]
+        answers: ["Kantharos", "кантарос"]
     },
-
     {
         text: {
-            en: "Skull moth is:",
-            bg: "Мъртвежка глава е:"
+            en: "Which economic activity marks the beginning of Neolithic economy?",
+            bg: "Коя стопанска дейност се приема за начало на неолитното стопанство?"
         },
         type: "choice",
         options: {
-            en: ["Type of fly", "Type of beetle", "Type of butterfly", "Type of poisonous marsh plant"],
-            bg: ["вид муха", "вид бръмбар", "вид пеперуда", "вид отровно блатно растение"]
+            en: ["Hunting", "Agriculture", "Fishing"],
+            bg: ["лов", "земеделие", "риболов"]
         },
-        answers: ["Type of butterfly", "вид пеперуда"]
+        answers: ["Agriculture", "земеделие"]
     },
-
     {
         text: {
-            en: "Scorpions are:",
-            bg: "Скорпионите са?"
+            en: "Which artifacts from the Archaeological Exhibition provide information about the spiritual life of prehistoric people?",
+            bg: "Кои експонати от Археологическата експозиция дават информация за духовния живот на праисторическото население?"
         },
         type: "choice",
         options: {
-            en: ["Insects", "Arachnids", "Crustaceans", "Woodlice"],
-            bg: ["насекоми", "паякообразни", "ракообразни", "мокрици"]
+            en: ["Amphorae", "Anthropomorphic clay figurines", "Lead weights"],
+            bg: ["амфори", "антропоморфни глинени фигури", "оловни щокове"]
         },
-        answers: ["Arachnids", "паякообразни"]
+        answers: ["Anthropomorphic clay figurines", "антропоморфни глинени фигури"]
     },
-
     {
         text: {
-            en: "Arthropods are called:",
-            bg: "Членестоногите се наричат:"
+            en: "What is NOT used as an admixture in clay for ceramic vessel production during Prehistory?",
+            bg: "Какво не се използва за примес в глината при производството на керамични съдове през Праисторията?"
         },
         type: "choice",
         options: {
-            en: ["Insects", "Arachnids", "All listed"],
-            bg: ["насекомите", "паякообразните", "всички изброени"]
+            en: ["Chaff and straw", "Sea salt", "Crushed shells of mussels or snails"],
+            bg: ["плява и слама", "морска сол", "стрити черупки от миди или охлюви"]
         },
-        answers: ["All listed", "всички изброени"]
+        answers: ["Sea salt", "морска сол"]
     },
-
     {
         text: {
-            en: "True or false: Are there sharks in the Black Sea?",
-            bg: "Вярно ли е, че в Черно море се срещат акули?"
+            en: "What is the most characteristic decoration of ceramic vessels during the Chalcolithic?",
+            bg: "Коя е най-характерната украса на керамичните съдове през Халколита?"
         },
         type: "choice",
         options: {
-            en: ["Yes, only one species - Spiny Black Sea shark", "No, sharks only in large seas and oceans"],
-            bg: ["Да, в Черно море се среща само един вид – Бодливата Черноморска акула", "Не, акулите се срещат само в големите морета и океани"]
+            en: ["Painting with white ochre", "Painting with graphite", "Sgraffito decoration"],
+            bg: ["рисуване с бяла охра", "рисуване с графитна боя", "сграфито-украса"]
         },
-        answers: ["Yes, only one species - Spiny Black Sea shark", "Да, в Черно море се среща само един вид – Бодливата Черноморска акула"]
+        answers: ["Painting with graphite", "рисуване с графитна боя"]
     },
-
     {
         text: {
-            en: "Sea dragon is:",
-            bg: "Морски дракон е"
+            en: "Which craft is seasonal during Prehistory?",
+            bg: "Кой занаят е сезонен през Праисторията?"
         },
         type: "choice",
         options: {
-            en: ["Giant aquatic snake from dinosaur era", "Mythical creature in Strandja folklore", "Type of fish"],
-            bg: ["вид голяма водна змия, обитавала нашите води по времето на динозаврите", "митологично същество, типично за Странджанския фолклор", "вид риба"]
+            en: ["Ceramic production", "Weaving", "Metalworking"],
+            bg: ["керамично производство", "тъкачество", "металообработка"]
         },
-        answers: ["Type of fish", "вид риба"]
+        answers: ["Weaving", "тъкачество"]
     },
-
     {
         text: {
-            en: "Which three species are invasive to the Black Sea?",
-            bg: "Кои три от изброените видове са инвазивни за Черно море?"
+            en: "What is the new alloy for tool production during the Bronze Age?",
+            bg: "Коя е нововъведената сплав за производство на сечива през Бронзовата епоха?"
         },
         type: "choice",
         options: {
-            en: ["Rapan, Blue crab, Black mussel", "Rapan, Seahorse, White sand mussel", "Blue crab, Black mussel, Scorpion"],
-            bg: ["Рапан, Син рак, Черната мида", "Рапан, Морското конче, Бяла пясъчна мида", "Син рак, Черната мида, Скорпид"]
+            en: ["Copper, arsenic or tin", "Iron and carbon", "Gold and silver"],
+            bg: ["от мед, арсен или калай", "от желязо и въглерод", "от злато и сребро"]
         },
-        answers: ["Rapan, Blue crab, Black mussel", "Рапан, Син рак, Черната мида"]
+        answers: ["Copper, arsenic or tin", "от мед, арсен или калай"]
     },
-
     {
         text: {
-            en: "Which class does the water tortoise belong to?",
-            bg: "Към кой клас спада водната костенурка?"
+            en: "Why are many ancient settlements and harbors in the Black Sea now underwater?",
+            bg: "Поради какви климатични промени много древни селища и пристанища в Черно море днес се намират под вода?"
         },
         type: "choice",
         options: {
-            en: ["Amphibians", "Reptiles", "Chimeras"],
-            bg: ["земноводни", "влечуги", "химери"]
+            en: ["Rise in sea level", "Tsunamis", "Volcanic eruptions"],
+            bg: ["покачване на нивото на Световния океан и Черно море", "цунами", "изригване на вулкани"]
         },
-        answers: ["Reptiles", "влечуги"]
+        answers: ["Rise in sea level", "покачване на нивото на Световния океан и Черно море"]
     },
-
     {
         text: {
-            en: "Which class does the Newt belong to?",
-            bg: "Към кой клас спада Дъждовникът"
+            en: "Which ancient author does NOT provide information about the Black Sea during antiquity?",
+            bg: "Кой античен автор не дава информация за Черно море през античността?"
         },
         type: "choice",
         options: {
-            en: ["Amphibians", "Reptiles", "Aquatic lizards"],
-            bg: ["земноводни", "влечуги", "водни гущери"]
+            en: ["Galen", "Eratosthenes", "Strabo"],
+            bg: ["Гален", "Ератостен", "Страбон"]
         },
-        answers: ["Amphibians", "земноводни"]
+        answers: ["Galen", "Гален"]
     },
-
     {
         text: {
-            en: "True statements about the Common water snake (Natrix natrix):",
-            bg: "Кои от изброените са вярни твърдения за Обикновената водна змия"
+            en: "Which tribes are associated with the earliest seafaring in the Black Sea?",
+            bg: "Кои са племената, свързани с най-ранното корабоплаване в Черно море?"
         },
         type: "choice",
         options: {
-            en: ["Harmless snake", "Feeds mainly with fish and frogs", "Sprays foul-smelling secretion from cloaca", "Despite being snake, has limbs"],
-            bg: ["безобиден смок", "храни се основно с риба и жаби", "пръска зловонен секрет от клоаката си", "въпреки, че е змия, тя всъщност има крайници"]
+            en: ["Thracians", "Goths", "Pechenegs"],
+            bg: ["Траки", "Готи", "Печенеги"]
         },
-        answers: ["Harmless snake, Feeds mainly with fish and frogs, Sprays foul-smelling secretion from cloaca", "безобиден смок, храни се основно с риба и жаби, пръска зловонен секрет от клоаката си"]
+        answers: ["Thracians", "Траки"]
     },
-
     {
         text: {
-            en: "True statement about amphibians:",
-            bg: "Кое твърдение за земноводните е вярно?"
+            en: "Which author in his epic poem 'Iliad' describes Thracians as active sailors?",
+            bg: "Кой автор в своята епическа поема 'Илиада' определя траките като активни мореплаватели?"
         },
         type: "choice",
         options: {
-            en: ["Divided into tailed and tailless", "No such division exists"],
-            bg: ["Земноводните се делят на опашати и безопашати", "Няма такова нещо като опашати и безопашати земноводни"]
+            en: ["Thucydides", "Homer", "Virgil"],
+            bg: ["Тукидид", "Омир", "Вергилий"]
         },
-        answers: ["Divided into tailed and tailless", "Земноводните се делят на опашати и безопашати"]
+        answers: ["Homer", "Омир"]
     },
-
     {
         text: {
-            en: "Green lizard and Newt are:",
-            bg: "Зеленият гущер и Дъждовникът са:"
+            en: "Which metals were most commonly mined in the Strandzha Mountains during Antiquity?",
+            bg: "Кои са най-често добиваните метали в Странджа планина през Античността?"
         },
         type: "choice",
         options: {
-            en: ["Close relatives", "Representatives of different vertebrate classes", "Same woodland species", "Mystical beings"],
-            bg: ["близки родственици", "представители на два различни класа гръбначни животни", "наименования на един и същ горски вид гущер", "мистични същества от Странджанската митология"]
+            en: ["Lead and zinc", "Copper and iron", "Gold and silver"],
+            bg: ["олово и цинк", "мед и желязо", "злато и сребро"]
         },
-        answers: ["Representatives of different vertebrate classes", "представители на два различни класа гръбначни животни"]
+        answers: ["Copper and iron", "мед и желязо"]
     },
-
     {
         text: {
-            en: "Where can the Garlic toad be found?",
-            bg: "Къде може да се срещне жабата Чесновница?"
+            en: "Under which medieval Bulgarian ruler did the Battle of Rusokastro take place in 1332?",
+            bg: "При управлението на кой средновековен български владетел, през 1332 г., се е състояла битката при крепостта Русокастро?"
         },
         type: "choice",
         options: {
-            en: ["In garlic fields", "In deep ditches", "In sandy habitats", "In forest habitats, on tree crowns"],
-            bg: ["в ниви с чесън", "в дълбоки вирове", "в пясъчни местообитания", "в горски местообитания, най-вече по короните на дърветата"]
+            en: ["Tsar Simeon the Great", "Tsar Ivan Alexander", "Tsar Ivan Shishman"],
+            bg: ["цар Симеон Велики", "цар Иван Александър", "цар Иван Шишман"]
         },
-        answers: ["In sandy habitats", "в пясъчни местообитания"]
+        answers: ["Tsar Ivan Alexander", "цар Иван Александър"]
     },
-
     {
         text: {
-            en: "Are there otters in Bulgaria?",
-            bg: "Има ли видри в България?"
+            en: "Which fortress was studied in the Kraymorie district of Burgas?",
+            bg: "Коя крепост е проучена в кв. Крайморие на гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Yes, throughout the country", "No, hunted to extinction in late 19th century"],
-            bg: ["Има, видрата се среща в цялата страна", "Няма, в България някога е имало видри, но са били ловувани до изчезване в края на 19ти век"]
+            en: ["Poros", "Rusokastro", "Markeli"],
+            bg: ["Порос", "Русокастро", "Маркели"]
         },
-        answers: ["Yes, throughout the country", "Има, видрата се среща в цялата страна"]
+        answers: ["Poros", "Порос"]
     },
-
     {
         text: {
-            en: "How many dolphin species are found in the Black Sea?",
-            bg: "Колко вида делфини се срещат в Черно море?"
+            en: "Which fortress is NOT presented with finds in the Archaeological Exhibition?",
+            bg: "Коя крепост не е представена с находки в Археологическата експозиция?"
         },
         type: "choice",
         options: {
-            en: ["2", "3", "4"],
-            bg: ["2", "3", "4"]
+            en: ["Poros", "Rusokastro", "Tsarevets"],
+            bg: ["Порос", "Русокастро", "Царевец"]
         },
-        answers: ["3", "3"]
+        answers: ["Tsarevets", "Царевец"]
     },
-
     {
         text: {
-            en: "Porpoise is:",
-            bg: "Морската свиня е:"
+            en: "Which epoch is characterized by red-figure pottery?",
+            bg: "За коя епоха е характерна червенофигурната керамика?"
         },
         type: "choice",
         options: {
-            en: ["Large bottom fish", "Type of dolphin", "Aquatic bird"],
-            bg: ["вид едра дънна риба", "вид делфин", "вид водоплаваща птица"]
+            en: ["Prehistory", "Middle Ages", "Antiquity"],
+            bg: ["Праистория", "Средновековие", "Античност"]
         },
-        answers: ["Type of dolphin", "вид делфин"]
+        answers: ["Antiquity", "Античност"]
     },
-
     {
         text: {
-            en: "Afala and Mutkur are:",
-            bg: "Афала и Муткур са:"
+            en: "Which artifact is NOT presented in the Archaeological Exhibition?",
+            bg: "Кой експонат не е представен в Археологическата експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Bird species", "Fish species", "Dolphin species", "Extinct large mammals"],
-            bg: ["видове птици", "видове риби", "видове делфини", "видове изчезнали едри бозайници"]
+            en: ["Amphora", "Pithos", "Pafta"],
+            bg: ["амфора", "питос", "пафта"]
         },
-        answers: ["Dolphin species", "видове делфини"]
+        answers: ["Pafta", "пафта"]
     },
-
     {
         text: {
-            en: "Spoonbill is:",
-            bg: "Лопатарката е:"
+            en: "According to the decree from Mesembria, what does ruler Sadala receive annually?",
+            bg: "Според декрета от Месембрия, какво получава владетелят Садала всяка година?"
         },
         type: "choice",
         options: {
-            en: ["Bird with flat bill tip for catching prey", "Shrimp with shovel-like claws", "Bottom fish with shovel-like fins"],
-            bg: ["вид птица с плосък върх на клюна", "вид скарида с плоски щипки", "вид дънна риба с предни плавници като лопатки"]
+            en: ["Golden crown worth 20 aurei", "Golden crown worth 30 solidi", "Golden crown worth 50 staters"],
+            bg: ["златен венец на стойност 20 ауреуса", "златен венец на стойност 30 солида", "златен венец на стойност 50 статера"]
         },
-        answers: ["Bird with flat bill tip for catching prey", "вид птица с плосък върх на клюна"]
+        answers: ["Golden crown worth 50 staters", "златен венец на стойност 50 статера"]
     },
-
     {
         text: {
-            en: "Which birds have long sharp bills used like harpoons?",
-            bg: "Кои от птиците имат дълъг и остър клюн?"
+            en: "What is the modern name of Mesembria?",
+            bg: "Кое е днешното име на Месембрия?"
         },
         type: "choice",
         options: {
-            en: ["Heron", "Swallow", "Kestrel", "Stork"],
-            bg: ["Чапла", "Лястовица", "Мишкар", "Щъркел"]
+            en: ["Pomorie", "Nesebar", "Ahtopol"],
+            bg: ["Поморие", "Несебър", "Ахтопол"]
         },
-        answers: ["Heron", "Stork", "Чапла", "Щъркел"]
+        answers: ["Nesebar", "Несебър"]
     },
-
     {
         text: {
-            en: "The migration path through our Black Sea is called:",
-            bg: "Прелетният път на птиците, който минава по нашето Черноморие се нарича:"
+            en: "What does the word 'polis' mean?",
+            bg: "Какво означава думата 'полис'?"
         },
         type: "choice",
         options: {
-            en: ["Via Aristotilis", "Via Chernomorsis", "Via Pontica", "Via Aurelius"],
-            bg: ["Виа Аристотилис", "Виа Черноморсис", "Виа Понтика", "Виа Аурелиус"]
+            en: ["City-state", "Mountain", "Fortress"],
+            bg: ["Град-държава", "Планина", "Крепост"]
         },
-        answers: ["Via Pontica", "Виа Понтика"]
+        answers: ["City-state", "Град-държава"]
     },
-
     {
         text: {
-            en: "Which bird species do NOT exist?",
-            bg: "Кои от изброените видове птици не съществуват:"
+            en: "Who is the patron goddess of the ancient city Deultum (today village Debelt)?",
+            bg: "Коя е богинята-покровителка на античния град Деултум (днес с. Дебелт)?"
         },
         type: "choice",
         options: {
-            en: ["Saber-billed, Gray slender bat, Cuckoo runner", "Buffy-backed hummingbird, Nile woodpecker, Spiny-billed swimmer"],
-            bg: ["Саблеклюн, Сива тънкопереста вечерница, Кокилобегач", "Буревестник, Нилска Дълбококопачница, Шипоклюн плувец"]
+            en: ["Cybele", "Hera", "Aphrodite"],
+            bg: ["Кибела", "Хера", "Афродита"]
         },
-        answers: ["Buffy-backed hummingbird, Saber-billed, Cuckoo runner", "Буревестник, Кокилобегач, Саблеклюн"]
+        answers: ["Cybele", "Кибела"]
     },
-
     {
         text: {
-            en: "True statements about Black Stork:",
-            bg: "Кои твърдения са верни за Черният щъркел?"
+            en: "In which vessels were wine and oil transported in ship holds during Antiquity?",
+            bg: "В какви съдове през античността се пренася вино и зехтина в трюмовете на корабите?"
         },
         type: "choice",
         options: {
-            en: ["Rare species, nests far from humans", "Mythological creature, connected with legends and superstitions","Black color is mutation of regular stork"],
-            bg: ["рядък вид, гнезди далече от човешките селища", "митологично същество, свързано с приказки и суеверия","черният щъркел е разновидност на познатият ни щъркел, където перата почерняват заради мутация"]
+            en: ["Amphorae", "Pans", "Pots"],
+            bg: ["амфори", "паници", "гърнета"]
         },
-        answers: ["Mythological creature, connected with legends and superstitions", "митологично същество, свързано с приказки и суеверия"]
+        answers: ["Amphorae", "амфори"]
     },
-
     {
         text: {
-            en: "Gugutka and Gurgulitsa are:",
-            bg: "Гугутката и гургулицата са:"
+            en: "Which empire ruled the Black Sea from IV – XII centuries?",
+            bg: "Коя империя господства в Черно море през IV – XII в.?"
         },
         type: "choice",
         options: {
-            en: ["Synonyms for same bird", "Two closely related species", "Names for male and female urban bird"],
-            bg: ["синоними за един и същи вид птица", "два близкородствени вида птици", "наименования на мъжки и женски индивид вид градска птица"]
+            en: ["Roman", "Byzantine", "Turkish"],
+            bg: ["Римска", "Византийска", "Турска"]
         },
-        answers: ["Two closely related species", "два близкородствени вида птици"]
+        answers: ["Byzantine", "Византийска"]
     },
-
     {
         text: {
-            en: "Difference between gull and glaucous gull:",
-            bg: "Каква е разликата между чайката и гларусът?"
+            en: "In which century did the first galleys appear?",
+            bg: "През кой век се появяват първите галери?"
         },
         type: "choice",
         options: {
-            en: ["Gull is newborn glaucous gull", "Gull is small local bird, glaucous is invasive Atlantic species", "Glaucous gull is type of gull"],
-            bg: ["чайка се нарича новоизлюпеното на гларусът", "чайката е малка морска птица типична за нашите ширини, а гларусът е инвазивен атлантически вид", "гларусът е вид чайка"]
+            en: ["V century", "VII century", "XII century"],
+            bg: ["V в.", "VII в.", "XII в."]
         },
-        answers: ["Glaucous gull is type of gull", "гларусът е вид чайка"]
+        answers: ["VII century", "VII в."]
     },
-
     {
         text: {
-            en: "Do birds only nest on roofs and trees?",
-            bg: "Птиците само на покриви и дървета ли строят гнезадата си?"
+            en: "In which year was the dugout canoe, presented in the Archaeological Exhibition, discovered?",
+            bg: "През коя година е открита лодката-еднодръвка, представена в Arqueological експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Yes, no ground nests due to predators", "No, some nest on ground like Saber-bill with camouflage eggs"],
-            bg: ["Да, птиците не правят гнезда на земята", "Не, някои птици гнездят и на земята, като например Саблеклюна"]
+            en: ["1912", "1975", "2020"],
+            bg: ["1912 г.", "1975 г.", "2020 г."]
         },
-        answers: ["No, some nest on ground like Saber-bill with camouflage eggs", "Не, някои птици гнездят и на земята, като например Саблеклюна"]
+        answers: ["1975", "1975 г."]
     },
-
     {
         text: {
-            en: "Which bird has distinctive crest on head?",
-            bg: "Коя птица може да характеризираме с изразен гребен на главата?"
+            en: "How many kilograms does the ingot from village Cherkovo, presented in the Archaeological Exhibition, weigh?",
+            bg: "Колко килограма тежи слитъкът от с. Черково, представен в Arqueological експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Jay", "Crested ibis", "River kingfisher", "Hoopoe"],
-            bg: ["сойката", "гривяка", "речната рибарка", "папуняка"]
+            en: ["26 kg", "50 kg", "80 kg"],
+            bg: ["26 кг.", "50 кг.", "80 кг."]
         },
-        answers: ["Hoopoe", "папуняка"]
+        answers: ["26 kg", "26 кг."]
     },
-
     {
         text: {
-            en: "Rarest migrating bird visiting Burgas lakes:",
-            bg: "Кой е най-редкият вид прелетна птица, която посещава и Бургаските езера?"
+            en: "In which century did the classical composite wooden anchor with stock appear?",
+            bg: "През кой век се появява класическата съставна дървена котва с щок?"
         },
         type: "choice",
         options: {
-            en: ["Reed warbler", "Hoopoe", "Crested cormorant", "Thin-billed mute swan"],
-            bg: ["Тръстиковото шаварче", "Папуняка", "Качулатият корморан", "Тънкоклюн свирец"]
+            en: ["VII BC", "I BC", "II AD"],
+            bg: ["VII в.пр.Хр.", "I в.пр.Хр.", "II в.сл.Хр."]
         },
-        answers: ["Thin-billed mute swan", "Тънкоклюн свирец"]
+        answers: ["VII BC", "VII в.пр.Хр."]
     },
-
     {
         text: {
-            en: "Red color of Atanasov Lake is due to:",
-            bg: "Червеният цвят на Атанасовското езеро се дължи на?"
+            en: "What is the most recognizable ancient ceramic form?",
+            bg: "Коя е най-разпознаваемата антична керамична форма?"
         },
         type: "choice",
         options: {
-            en: ["Pollution", "Blood from high predation in summer", "Excess red algae population"],
-            bg: ["замърсяване", "кръв заради високото хищничество", "свръх популация на червени водорасли"]
+            en: ["Amphora", "Pan", "Hydria"],
+            bg: ["амфора", "паница", "хидрия"]
         },
-        answers: ["Excess red algae population", "свръх популация на червени водорасли"]
+        answers: ["Amphora", "амфора"]
     },
-
     {
         text: {
-            en: "Which are lakes near Burgas?",
-            bg: "Кои от изброените са езера, срещащи се край Бургас?"
+            en: "Which period in science is designated as the Iron Age?",
+            bg: "Кой период в науката е обозначен като Желязна епоха?"
         },
         type: "choice",
         options: {
-            en: ["Mandrenska, Burgas Lake, Atanasovsko", "Burgas Lake, Konlusko, Atanasovsko Lake"],
-            bg: ["Мандренското езеро, Бургаското езеро, Атанасовското езеро", "Бургаското езеро, Конлушкото езеро, Атанасовското езеро"]
+            en: ["II – I millennia BC", "III millennia BC", "I millennia AD"],
+            bg: ["II хил.пр.Хр. – I хил.пр.Хр.", "III хил.пр.Хр.", "I хил.сл.Хр."]
         },
-        answers: ["Mandrenska, Burgas Lake, Atanasovsko", "Мандренското езеро, Бургаското езеро, Атанасовското езеро"]
+        answers: ["II – I millennia BC", "II хил.пр.Хр. – I хил.пр.Хр."]
     },
-
     {
         text: {
-            en: "Characteristics of Swift:",
-            bg: "Кои от изброените са характерни за птицата Бързолет?"
+            en: "What are the most common ornaments on ceramic vessels from the Early Iron Age?",
+            bg: "Какви са най-срещаните орнаменти върху керамичните съдовете от Ранната желязна епоха?"
         },
         type: "choice",
         options: {
-            en: ["Short and wide wings, short legs", "Long and sharp wings, short legs", "Short wings, long legs"],
-            bg: ["къси и широки криле, къси крака", "издължени и остри криле, къси крака", "къси криле, дълги крака"]
+            en: ["Stamped or incised ornaments", "Graphite-painted ornaments", "White-painted ornaments"],
+            bg: ["щемпелувани или врязани орнаменти", "рисувани с графит орнаменти", "рисувани с бяла боя орнаменти"]
         },
-        answers: ["Long and sharp wings, short legs", "издължени и остри криле, къси крака"]
+        answers: ["Stamped or incised ornaments", "щемпелувани или врязани орнаменти"]
     },
-
     {
         text: {
-            en: "Which birds are ravens?",
-            bg: "Кои от изброените птици са вранови?"
+            en: "How is thick-walled pottery decorated during the Early Iron Age?",
+            bg: "Как се украсява дебелостенната керамика през Ранната желязна епоха?"
         },
         type: "choice",
         options: {
-            en: ["Jay, magpie, crow, rook, daw", "Magpie, crow, thrush", "Jay, magpie, crow, rook"],
-            bg: ["сойка, сврачка, чавка, сврака, чинка", "сврачка, чавка, кос", "сойка, сврачка, чавка, сврака"]
+            en: ["With plastic strips and dimples", "With painted decoration", "With sgraffito decoration"],
+            bg: ["с пластични ленти и ямички", "с рисувана украса", "със сграфито-украса"]
         },
-        answers: ["Jay, crow, rook", "сойка, чавка, сврака"]
+        answers: ["With plastic strips and dimples", "с пластични ленти и ямички"]
     },
-
     {
         text: {
-            en: "Crested ibis is:",
-            bg: "Гривякът е:"
+            en: "What is a dolmen?",
+            bg: "Какво е долмен?"
         },
         type: "choice",
         options: {
-            en: ["Marine fish", "River fish", "Pigeon type", "Small rodent"],
-            bg: ["вид морска риба", "вид речна риба", "вид гълъб", "вид дребен гризач"]
+            en: ["Temple complex", "Burial structure", "Harbor"],
+            bg: ["храмов комплекс", "гробно съоръжение", "пристанище"]
         },
-        answers: ["Pigeon type", "вид гълъб"]
+        answers: ["Burial structure", "гробно съоръжение"]
     },
-
     {
         text: {
-            en: "Bee-eater bird color is entirely:",
-            bg: "Авлигата е птица, чиито цвят на тялото е изцяло..."
+            en: "What are dolmens made of?",
+            bg: "От какво са направени долмените?"
         },
         type: "choice",
         options: {
-            en: ["Blue", "Yellow", "Red", "Green"],
-            bg: ["син", "жълт", "червен", "зелен"]
+            en: ["Bricks", "Massive stone slabs", "Wooden beams"],
+            bg: ["от тухли", "от масивни каменни плочи", "от дървени греди"]
         },
-        answers: ["Yellow", "жълт"]
+        answers: ["Massive stone slabs", "от масивни каменни плочи"]
     },
-
     {
         text: {
-            en: "Nutria is:",
-            bg: "Нутрията е:"
+            en: "Where are dolmens found in modern Bulgaria?",
+            bg: "Къде се срещат долмени в съвременна България?"
         },
         type: "choice",
         options: {
-            en: ["Freshwater fish", "Night butterfly", "Bird", "Mammal"],
-            bg: ["вид сладководна риба", "вид нощна пеперуда", "вид птица", "вид бозайник"]
+            en: ["Southeastern Bulgaria", "Western Bulgaria", "Northern Bulgaria"],
+            bg: ["в Югоизточна България", "в Западна България", "в Северна България"]
         },
-        answers: ["Mammal", "вид бозайник"]
+        answers: ["Southeastern Bulgaria", "в Югоизточна България"]
     },
-
     {
         text: {
-            en: "Bats are:",
-            bg: "Прилепите са:"
+            en: "With which term is the dispersal of Greeks by sea during VIII BC designated in history?",
+            bg: "С кой термин в историята остава разселването на елините по море през VIII в.пр.Хр.?"
         },
         type: "choice",
         options: {
-            en: ["Separate order of flying mammals", "Flying mice", "Relatives of hedgehogs", "Next stage in bird evolution"],
-            bg: ["отделен разред летящи бозайници", "летящи мишки", "родственици на поровете", "следващия стадий в еволюцията на птиците"]
+            en: ["Great Greek Colonization", "Great Migration of Peoples", "Hundred Years War"],
+            bg: ["Великата Гръцка колонизация", "Великото преселение на народите", "Стогодишната война"]
         },
-        answers: ["Separate order of flying mammals", "отделен разред летящи бозайници"]
+        answers: ["Great Greek Colonization", "Великата Гръцка колонизация"]
     },
-
     {
         text: {
-            en: "Hedgehog spines are:",
-            bg: "Бодлите на таралежите са?"
+            en: "Which are the great Greek colonies in the Burgas region?",
+            bg: "Кои са големите елински колонии в района на Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Modified hairs", "Modified horn particles", "Bone growths"],
-            bg: ["видоизменени косми", "видоизменени рогови частици", "костни израстъци"]
+            en: ["Philippopolis and Serdica", "Apollonia and Mesambria", "Heraclea and Miletus"],
+            bg: ["Филипопол и Сердика", "Аполония и Месамврия", "Хераклея и Милет"]
         },
-        answers: ["Modified hairs", "видоизменени косми"]
+        answers: ["Apollonia and Mesambria", "Аполония и Месамврия"]
     },
-
     {
         text: {
-            en: "How many mammal species are found in Bulgaria?",
-            bg: "Колко вида бозайници се срещат в България?"
+            en: "Where did the settlers who founded most Greek colonies on the western Black Sea coast come from?",
+            bg: "От къде идват преселниците, основали повечето гръцки колонии по западния бряг на Черно море?"
         },
         type: "choice",
         options: {
-            en: ["Around 20", "Over 1000", "Over 100"],
-            bg: ["около 20", "над 1000", "над 100"]
+            en: ["Alexandria", "Miletus", "Athens"],
+            bg: ["Александрия", "Милет", "Атина"]
         },
-        answers: ["Over 100", "над 100"]
+        answers: ["Miletus", "Милет"]
     },
-
     {
         text: {
-            en: "True statement about Bulgaria's mammal diversity:",
-            bg: "Кое твърдение е вярно?"
+            en: "Which fortress was built on a rocky hill?",
+            bg: "Коя крепост е построена върху скалист хълм?"
         },
         type: "choice",
         options: {
-            en: ["Bulgaria is last in Europe for mammal diversity", "Bulgaria leads Europe in mammal diversity"],
-            bg: ["България е на едно от последните места в Европа по разнообразие", "България е водеща в Европа по разнообразие"]
+            en: ["Aquae Calidae", "Deultum", "Rusokastro"],
+            bg: ["Акве калиде", "Деултум", "Русокастро"]
         },
-        answers: ["Bulgaria leads Europe in mammal diversity", "България е водеща в Европа по разнообразие"]
+        answers: ["Rusokastro", "Русокастро"]
     },
-
     {
         text: {
-            en: "Which mammals are dog-like?",
-            bg: "Кои видове бозайници са кучеподобни?"
+            en: "When did Mesambria begin minting its first coins?",
+            bg: "Кога Месамврия започва да сече своите първи монети?"
         },
         type: "choice",
         options: {
-            en: ["Wolf, badger, fox", "Jackal, fox, wolf", "Wolf, jackal, badger"],
-            bg: ["вълк, язовец, лисица", "чакал, лисица, вълк", "вълк, чакал, язовец"]
+            en: ["VII BC", "V BC", "I BC"],
+            bg: ["VII в.пр.Хр.", "V в.пр.Хр.", "I в.пр.Хр."]
         },
-        answers: ["Jackal, fox, wolf", "чакал, лисица, вълк"]
+        answers: ["V BC", "V в.пр.Хр."]
     },
-
     {
         text: {
-            en: "Smallest mammal in the world found in Bulgaria:",
-            bg: "Кой е най-дребният бозайник в Света, който се среща и в България?"
+            en: "In which district of Burgas were luxurious red-figure vessels – a jug and two craters – discovered?",
+            bg: "В кой квартал на гр. Бургас са открити луксозни червенофигурни съдове – кана и два кратера?"
         },
         type: "choice",
         options: {
-            en: ["Brown bat", "Etruscan shrew", "Sleepy dormouse"],
-            bg: ["Кафявото прилепче", "Етруската земеровка", "Мишевидният сънливец"]
+            en: ["Cherno More", "Pobeda", "Vetren"],
+            bg: ["кв. Черно море", "кв. Победа", "кв. Ветрен"]
         },
-        answers: ["Etruscan shrew", "Етруската земеровка"]
+        answers: ["Pobeda", "кв. Победа"]
     },
-
     {
         text: {
-            en: "Hedgehog is:",
-            bg: "Таралежът е:"
+            en: "Who were the scientific leaders of the archaeological excavations in Sladkite Kladentsi locality in Burgas in 1978?",
+            bg: "Кои са научните ръководители на археологическите разкопки в местността Сладките кладенци на гр. Бургас през 1978 г.?"
         },
         type: "choice",
         options: {
-            en: ["Rodent", "Insectivorous mammal", "Porcupine"],
-            bg: ["вид гризач", "вид насекомояден бозайник", "вид пор"]
+            en: ["Petar Balananov and Tsonia Drazheva", "Ivan Karayotov and Petya Kiyashkina", "Mikhail Lazarov and Maria Tsaneva"],
+            bg: ["Петър Балабанов и Цоня Дражева", "Иван Карайотов и Петя Кияшкина", "Михаил Лазаров и Мария Цанева"]
         },
-        answers: ["Insectivorous mammal", "вид насекомояден бозайник"]
+        answers: ["Petar Balananov and Tsonia Drazheva", "Петър Балабанов и Цоня Дражева"]
     },
-
     {
         text: {
-            en: "Badger is:",
-            bg: "Язовецът е:"
+            en: "How many dugout canoes are presented in the Archaeological Exhibition?",
+            bg: "Колко лодки еднодръвки са представени в Arqueological експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Insectivorous mammal", "Dog-like mammal", "Porcupine"],
-            bg: ["вид насекомояден бозайник", "вид кучеподобно", "вид пор"]
+            en: ["Two", "One", "Five"],
+            bg: ["две", "една", "пет"]
         },
-        answers: ["Porcupine", "вид пор"]
+        answers: ["One", "една"]
     },
-
     {
         text: {
-            en: "Which mammal families are found in Bulgaria?",
-            bg: "Кои семейства чифтокопитни бозайници се срещат в България?"
+            en: "What scenes are depicted on the two craters and jug discovered in Sladkite Kladentsi, Burgas?",
+            bg: "Какви са сцените, изобразени върху двата кратера и каната, открити в местността Сладките кладенци на гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Deer, antelopes, dog-like", "Pigs, porcupines, cats", "Antelopes, pigs, deer"],
-            bg: ["лалугери, кухороги, кучеподобни", "свине, порове, котки", "кухороги, свине, елени"]
+            en: ["Dionysian scenes", "Funeral processions", "Gladiator fights"],
+            bg: ["дионисиеви сцени", "погребални шествия", "гладиаторски борби"]
         },
-        answers: ["Antelopes, pigs, deer", "кухороги, свине, елени"]
+        answers: ["Dionysian scenes", "дионисиеви сцени"]
     },
-
     {
         text: {
-            en: "Wild boars feed on:",
-            bg: "С какво се хранят дивите свине?"
+            en: "Which centuries span the Hellenistic epoch?",
+            bg: "Кои векове обхваща Елинистическата епоха?"
         },
         type: "choice",
         options: {
-            en: ["Potatoes", "Meat", "Omnivorous"],
-            bg: ["с грудки", "с месо", "всеядни"]
+            en: ["V-III BC", "IV-I BC", "IV-VI AD"],
+            bg: ["V-III в.пр.Хр.", "IV-I в.пр.Хр.", "IV-VI в.сл.Хр."]
         },
-        answers: ["Omnivorous", "всеядни"]
+        answers: ["IV-I BC", "IV-I в.пр.Хр."]
     },
-
     {
         text: {
-            en: "True or false: Underground rabbit is most widespread mammal in Bulgaria?",
-            bg: "Вярно ли е твърдението, че Заекът подземник е най-разпространеният бозайник в България?"
+            en: "By which Roman emperor was the ancient city Deultum (today village Debelt) founded in the 70s of I century AD?",
+            bg: "От кой римски emperador през 70-те год. на I в.сл.Хр. е основан античният град Деултум (днес с. Дебелт)?"
         },
         type: "choice",
         options: {
-            en: ["Yes, found everywhere", "No, only on St. Ivan island"],
-            bg: ["Да, среща се повсеместно", "Не, среща се само на о. Св. Иван"]
+            en: ["Augustus", "Nero", "Vespasian"],
+            bg: ["Август", "Нерон", "Веспасиан"]
         },
-        answers: ["No, only on St. Ivan island", "Не, среща се само на о. Св. Иван"]
+        answers: ["Vespasian", "Веспасиан"]
     },
-
     {
         text: {
-            en: "True statement about badgers:",
-            bg: "Кое е вярно за язовците?"
+            en: "In which municipality of Burgas region is Deultum (today village Debelt) located?",
+            bg: "В коя община от област Бургас е разположен античният град Деултум (днес с. Дебелт)?"
         },
         type: "choice",
         options: {
-            en: ["Weak hearing, good vision, good smell", "Weak vision, good hearing, good smell", "Weak smell, good vision, weak hearing"],
-            bg: ["имат слаб слух, добро зрение, добре развито обоняние", "имат слабо зрение, добър слух, добре развито обоняние", "имат слабо обоняние, добро зрение, слаб слух"]
+            en: ["Malko Turnovo", "Nesebar", "Sredets"],
+            bg: ["Малко Търново", "Несебър", "Средец"]
         },
-        answers: ["Weak vision, good hearing, good smell", "имат слабо зрение, добър слух, добре развито обоняние"]
+        answers: ["Sredets", "Средец"]
     },
-
     {
         text: {
-            en: "Which mammals are found in Strandja?",
-            bg: "Кои от изброените бозайници се срещат в Странджа?"
+            en: "Which are the most frequently found marble votive plaques in modern Bulgaria?",
+            bg: "Кои са най-често срещаните мраморни оброчни плочки, откривани в територията на съвременна България?"
         },
         type: "choice",
         options: {
-            en: ["Jackal, bear, wolf, otter", "Wolf, otter, skunk", "Jackal, bear, wolf, otter, skunk"],
-            bg: ["чакал, мечка, вълк, видра", "вълк, видра, скункс", "чакал, мечка, вълк, видра, скункс"]
+            en: ["Of the Thracian Horseman", "Of the Great Mother Goddess", "Of Athena Pallada"],
+            bg: ["на Тракийския конник", "на Великата Богиня майка", "на Атина Палада"]
         },
-        answers: ["Jackal, wolf, otter", "чакал, вълк, видра"]
+        answers: ["Of the Thracian Horseman", "на Тракийския конник"]
     },
-
     {
         text: {
-            en: "Which mammal lives solitary?",
-            bg: "Кой от изброените видове бозайници води самостоятелен начин на живот?"
+            en: "Which Bulgarian tsar began a campaign in 1304 to reclaim Bulgarian lands in the Southern Black Sea region?",
+            bg: "Кой български цар започва кампания през 1304 г. за отвоюване на българските земи по Южното Черномории?"
         },
         type: "choice",
         options: {
-            en: ["Badger", "Wild cat", "Jackal"],
-            bg: ["язовец", "дива котка", "чакал"]
+            en: ["Tsar Ivan Alexander", "Tsar Todor Svetoslav Terter", "Tsar Ivan Sratsimir"],
+            bg: ["цар Иван Александър", "цар Тодор Светослав Тертер", "цар Иван Срацимир"]
         },
-        answers: ["Wild cat", "дива котка"]
+        answers: ["Tsar Todor Svetoslav Terter", "цар Тодор Светослав Тертер"]
     },
-
     {
         text: {
-            en: "True or false: Rabbits are rodents?",
-            bg: "Вярно ли е твърдението, че Зайците са гризачи?"
+            en: "When did Roman troops first arrive in Thrace?",
+            bg: "Кога за пръв път дошли римски войски в Тракия?"
         },
         type: "choice",
         options: {
-            en: ["Yes, rabbits are rodents", "No, rabbits are separate mammal order"],
-            bg: ["Да, зайците са вид гризач", "Не, зайците са отделен разред бозайници"]
+            en: ["II century BC", "I century BC", "IV century BC"],
+            bg: ["През II век пр. Хр.", "През I век пр.Хр.", "През IV век пр.Хр."]
         },
-        answers: ["No, rabbits are separate mammal order", "Не, зайците са отделен разред бозайници"]
+        answers: ["II century BC", "През II век пр. Хр."]
     },
-
     {
         text: {
-            en: "Sand is formed from:",
-            bg: "Пясъците се образуват от:"
+            en: "When did the flourishing of terracotta production – small statues or reliefs – occur?",
+            bg: "Кога настъпва разцветът за производство на теракоти – малки статуетки или релефи от печена глина?"
         },
         type: "choice",
         options: {
-            en: ["Rock erosion", "Shell organism remains", "Both"],
-            bg: ["ерозия на скали", "останки от черупчести животни", "и двете"]
+            en: ["V-III BC", "III-I BC", "II-I AD"],
+            bg: ["V-III в.пр.Хр.", "III-I в.пр.Хр.", "II-I в.сл.Хр."]
         },
-        answers: ["Both", "и двете"]
+        answers: ["V-III BC", "V-III в.пр.Хр."]
     },
-
     {
         text: {
-            en: "Dolphins are:",
-            bg: "Делфините са"
+            en: "Until which century was the fortress Rusokastro inhabited?",
+            bg: "До кой век е била заселена крепостта Русокастро?"
         },
         type: "choice",
         options: {
-            en: ["Mammals adapted to aquatic life", "Descendants of prehistoric ichthyosaurs", "Fish that developed mammal traits"],
-            bg: ["бозайници, адаптирани към воден начин на живот", "наследници на праисторическите ихтиозаври", "риби, които в хода на еволюцията си са придобили черти на бозайници"]
+            en: ["End of XIV century", "End of XII century", "End of XVII century"],
+            bg: ["до края на XIV в.", "до края на XII в.", "до края на XVII в."]
         },
-        answers: ["Mammals adapted to aquatic life", "бозайници, адаптирани към воден начин на живот"]
+        answers: ["End of XIV century", "до края на XIV в."]
     },
-
     {
         text: {
-            en: "Marine turtle is typical Black Sea species:",
-            bg: "Морската костенурка е типичен Черноморски вид"
+            en: "On which peninsula was the fortress Poros, located near Burgas, built?",
+            bg: "На кой полуостров е изградена крепостта Порос, разположена до гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Yes, inhabits southern Black Sea and sometimes visits our waters", "No, enters through Bosporus from Mediterranean accidentally"],
-            bg: ["Вярно, обитава най-южните части на Черно море и посещава наши води", "Грешно, навлизат през Босфора от Егейско море случайно"]
+            en: ["Poros Peninsula", "Sinop Peninsula", "Taman Peninsula"],
+            bg: ["полуостров Форос", "полуостров Синоп", "полуостров Таман"]
         },
-        answers: ["No, enters through Bosporus from Mediterranean accidentally", "Грешно, навлизат през Босфора от Егейско море случайно"]
+        answers: ["Poros Peninsula", "полуостров Форос"]
     },
-
     {
         text: {
-            en: "Rapan is:",
-            bg: "Рапанът е:"
+            en: "During underwater archaeological research in which bay was the collection of Venetian glass vessels found?",
+            bg: "При подводните археологически проучвания на кой залив е открита колекцията от венициански стъклени съдове?"
         },
         type: "choice",
         options: {
-            en: ["Carnivorous mussel", "Marine snail", "Crustacean"],
-            bg: ["вид хищна мида", "вид морски охлюв", "вид ракообразно"]
+            en: ["Kavarna Bay", "Bolata Bay", "Chengene Skele Bay"],
+            bg: ["залив Каварна", "залив Болата", "залив Ченгене Скеле"]
         },
-        answers: ["Marine snail", "вид морски охлюв"]
+        answers: ["Chengene Skele Bay", "залив Ченгене Скеле"]
     },
-
     {
         text: {
-            en: "True or false: Are starfish carnivorous?",
-            bg: "Вярно ли е, че Морските звезди са хищни?"
+            en: "Who is the god of wine, viticulture and celebration in Greek mythology?",
+            bg: "Кой е богът в гръцката митология на виното, лозарството и веселието?"
         },
         type: "choice",
         options: {
-            en: ["Yes, eat mollusks and worms", "No, eat bottom algae mainly"],
-            bg: ["Да, хранят се с мекотели и многочетинести червеи", "Не, тъй като са много бавни, се хранят основно с дънни водорасли"]
+            en: ["Apollo", "Dionysus", "Hercules"],
+            bg: ["Аполон", "Дионис", "Херакъл"]
         },
-        answers: ["Yes, eat mollusks and worms", "Да, хранят се с мекотели и многочетинести червеи"]
+        answers: ["Dionysus", "Дионис"]
     },
-
     {
         text: {
-            en: "Corals are:",
-            bg: "Коралите са?"
+            en: "What are the intoxicated dancing women in the retinue of god Dionysus called?",
+            bg: "Как се наричат танцуващите в опиянение жени от свита на бог Дионис?"
         },
         type: "choice",
         options: {
-            en: ["Algae in shells", "Animal phylum with sessile lifestyle", "Marine sponges"],
-            bg: ["водорасли в черупки", "вид животни, водещи прикрепен начин", "вид морски гъби"]
+            en: ["Maenads or Bacchantes", "Amazons", "Fairies"],
+            bg: ["менади или вакханки", "амазонки", "феи"]
         },
-        answers: ["Animal phylum with sessile lifestyle", "вид животни, водещи прикрепен начин"]
+        answers: ["Maenads or Bacchantes", "менади или вакханки"]
     },
-
     {
         text: {
-            en: "Largest ocean pollutant:",
-            bg: "Най-големият замърсител на Световния океан е"
+            en: "Which archaeological site was NOT researched by specialists from the Regional Historical Museum – Burgas?",
+            bg: "Кой археологически обект не е проучван от специалисти на Регионален исторически музей – Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Paper", "Plastic", "Glass"],
-            bg: ["хартията", "пластмасата", "стъкло"]
+            en: ["Fortress Tsuida", "Fortress Rusokastro", "Fortress Aquae Calidae"],
+            bg: ["антична и средновековна крепост Цуида", "антична и средновековна крепост Русокастро", "антична и средновековна крепост Акве калиде"]
         },
-        answers: ["Plastic", "пластмасата"]
+        answers: ["Fortress Tsuida", "антична и средновековна крепост Цуида"]
     },
-
     {
         text: {
-            en: "From which country did collector Iliya Delev gather crystals and minerals?",
-            bg: "От коя е държавата, от която колекционерът г-н Илия Делев събира богат набор от кристали и минерали?"
+            en: "In which year did Bulgarians reject the administrative-political authority of Byzantium?",
+            bg: "През коя година българите отхвърлят административно-политическата власт на Византия?"
         },
         type: "choice",
         options: {
-            en: ["Greenland", "Ghana", "Brazil"],
-            bg: ["Гренландия", "Гана", "Бразилия"]
+            en: ["1185/86", "1258", "1388"],
+            bg: ["1185/86 г.", "1258 г.", "1388 г."]
         },
-        answers: ["Brazil", "Бразилия"]
+        answers: ["1185/86", "1185/86 г."]
     },
-
     {
         text: {
-            en: "True or false: Is village Rosen in Strandja on an ancient volcano?",
-            bg: "Вярно ли е, че село Росен в Странджа лежи върху палеовулкан?"
+            en: "What provides basic information to researchers about amphorae production centers?",
+            bg: "Какво дава основна информация на изследователите за производствените центрове на амфори?"
         },
         type: "choice",
         options: {
-            en: ["Yes, known as Rosen ore field", "No, Bulgaria had no volcanoes"],
-            bg: ["Да, районът е известен като Росенско рудно поле", "Не, в България е нямало вулкани"]
+            en: ["Amphora seals", "Clay color of amphorae", "Amphorae walls"],
+            bg: ["амфорните печати", "цвета на глината на амфорите", "стените на амфори"]
         },
-        answers: ["Yes, known as Rosen ore field", "Да, районът е известен като Росенско рудно поле"]
+        answers: ["Amphora seals", "амфорните печати"]
     },
-
     {
         text: {
-            en: "Is calcite found in copper deposits?",
-            bg: "Среща ли се калцитът в медни находища?"
+            en: "What material were discovered Neolithic tools primarily made of?",
+            bg: "От какъв материал основно са изработени откритите сечива от Неолита?"
         },
         type: "choice",
         options: {
-            en: ["Yes", "No"],
-            bg: ["Да", "Не"]
+            en: ["Stone", "Bronze", "Iron"],
+            bg: ["от камък", "от бронз", "от желязо"]
         },
-        answers: ["Yes", "Да"]
+        answers: ["Stone", "от камък"]
     },
-
     {
         text: {
-            en: "What is Southeast Bulgaria known for since ancient times?",
-            bg: "С добив на какво е известна Югоизточна България още от древни времена?"
+            en: "Which fortress was built in the 'Vetren' district of Burgas?",
+            bg: "Коя крепост е построена в квартал Ветрен на гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Silver", "Copper", "Diamonds"],
-            bg: ["сребро", "мед", "диаманти"]
+            en: ["Aquae Calidae", "Rusokastro", "Markeli"],
+            bg: ["крепост Акве калиде", "крепост Русокастро", "крепост Маркели"]
         },
-        answers: ["Copper", "мед"]
+        answers: ["Aquae Calidae", "крепост Акве калиде"]
     },
-
     {
         text: {
-            en: "What did Associate Professor Angelov study before mineralogy?",
-            bg: "С какво се е занимавал доц. Ангелов преди да започне да изучава минералологията?"
+            en: "What materials were Neolithic dwellings built with?",
+            bg: "С какво са строени жилищата през Неолита?"
         },
         type: "choice",
         options: {
-            en: ["Chemistry", "Astronomy", "Biology"],
-            bg: ["химия", "астрономия", "биология"]
+            en: ["Wood and clay", "Baked bricks", "Steel-concrete"],
+            bg: ["дърво и глина", "изпечени тухли", "стомано-бетон"]
         },
-        answers: ["Biology", "биология"]
+        answers: ["Wood and clay", "дърво и глина"]
     },
-
     {
         text: {
-            en: "True statements about quartz:",
-            bg: "Кои твърдения са вярни за кварцът"
+            en: "In which archaeological site was the iron Roman chair, presented in the Archaeological Exhibition, discovered?",
+            bg: "В кой археологически обект е открит железният римски стол, представен в Arqueological експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Type of transparent metal", "Mineral", "Participates in rock formation", "Origin from fallen meteorite ~550 million years ago"],
-            bg: ["той е вид прозрачен метал", "той е минерал", "участва в скалообразуването", "произходът му е паднал метеорит преди около 550 млн. год."]
+            en: ["Kabyle", "Debelt", "Sozopol"],
+            bg: ["Кабиле", "Дебелт", "Созопол"]
         },
-        answers: ["Mineral, Participates in rock formation", "той е минерал, участва в скалообразуването"]
+        answers: ["Debelt", "Дебелт"]
     },
-
     {
         text: {
-            en: "Quartz applications in technology:",
-            bg: "В кои технологични сфери има приложение кварцът"
+            en: "Which ancient and medieval city was NOT a maritime harbor?",
+            bg: "Кой античен и средновековен град не е бил морско пристанище?"
         },
         type: "choice",
         options: {
-            en: ["Metalworking", "Radio-electronics", "Optics", "All of them"],
-            bg: ["в металообработката", "в радиоелектрониката", "в оптиката", "всички"]
+            en: ["Apollonia (Sozopol)", "Aquileia (Aytos)", "Anchialos (Pomorie)"],
+            bg: ["Аполония (Созопол)", "Аквилея (Айтос)", "Анхиало (Поморие)"]
         },
-        answers: ["Optics, Radio-electronics", "в оптиката, в радиоелектрониката"]
+        answers: ["Aquileia (Aytos)", "Аквилея (Айтос)"]
     },
-
     {
         text: {
-            en: "True or false: Does opal contain water?",
-            bg: "Вярно ли е, че в минералът опал има вода?"
+            en: "What kind of hull did dromone ships have?",
+            bg: "С какъв корпус са били корабите-дромони?"
         },
         type: "choice",
         options: {
-            en: ["Yes, can evaporate and dehydrate", "No water in rocks"],
-            bg: ["Да, в опалът има съдържание на вода", "Няма как в камъните да има вода"]
+            en: ["Pointed", "Curved", "Flat"],
+            bg: ["заострен", "извит", "плосък"]
         },
-        answers: ["Yes, can evaporate and dehydrate", "Да, в опалът има съдържание на вода"]
+        answers: ["Pointed", "заострен"]
     },
-
     {
         text: {
-            en: "Process of crystal development is called:",
-            bg: "Как се нарича процесът на развитие на един кристал?"
+            en: "How many rows of oars did dromone ships have?",
+            bg: "Колко реда гребла са имали корабите-дромони?"
         },
         type: "choice",
         options: {
-            en: ["Crystallotherapy", "Succession", "Crystallization", "Petrification"],
-            bg: ["кристалотерия", "сукцесия", "кристализация", "вкаменизация"]
+            en: ["Two rows", "One row", "Four rows"],
+            bg: ["два реда", "един ред", "четири реда"]
         },
-        answers: ["Crystallization", "кристализация"]
+        answers: ["Two rows", "два реда"]
     },
-
     {
         text: {
-            en: "What shape does a geode have?",
-            bg: "Каква форма има геода?"
+            en: "In which year was Constantinople captured by Latin knights?",
+            bg: "През коя година Константинопол е превзет от латинските рицари?"
         },
         type: "choice",
         options: {
-            en: ["Square", "Elongated", "Oval", "Liquid without shape"],
-            bg: ["квадратна", "продълговата", "овална", "това е течност, няма форма"]
+            en: ["1202", "1204", "1224"],
+            bg: ["1202 г.", "1204 г.", "1224 г."]
         },
-        answers: ["Oval", "овална"]
+        answers: ["1204", "1204 г."]
     },
-
     {
         text: {
-            en: "Which are native elements?",
-            bg: "Кои от изброените са самородни елементи?"
+            en: "During which Crusade was Constantinople captured?",
+            bg: "При кой Кръстоносен поход е превзет Константинопол?"
         },
         type: "choice",
         options: {
-            en: ["Gold, clay, copper", "Gold, copper, silver", "Silver, clay, gravel"],
-            bg: ["злато, глина, мед", "злато, мед, сребро", "сребро, глина, чакъл"]
+            en: ["First", "Fourth", "Fifth"],
+            bg: ["първи", "четвърти", "пети"]
         },
-        answers: ["Gold, copper, silver", "злато, мед, сребро"]
+        answers: ["Fourth", "четвърти"]
     },
-
     {
         text: {
-            en: "Precious stones are:",
-            bg: "Кои от изброените са скъпоценни камъни?"
+            en: "What goods were mainly exported to Western European markets from Bulgarian Black Sea region in the XIV century?",
+            bg: "Какви стоки основно се изнасят към пазарите на Западна Европа през XIV век от Българското Черноморие?"
         },
         type: "choice",
         options: {
-            en: ["Topaz, tourmaline, beryl", "Quartz, granite, diamond"],
-            bg: ["топаз, турмалин, берил", "кварц, гранит, диамант"]
+            en: ["Agricultural raw materials", "Processed metals", "Precious stones"],
+            bg: ["земеделски суровини", "обработени метали", "скъпоценни камъни"]
         },
-        answers: ["Topaz, tourmaline, beryl", "топаз, турмалин, берил"]
+        answers: ["Agricultural raw materials", "земеделски суровини"]
     },
-
     {
         text: {
-            en: "Most common sand color on Earth:",
-            bg: "Кой е най-разпространеният цвят на пясъка на Земята?"
+            en: "From what wood was the dugout canoe, presented in the Archaeological Exhibition, made?",
+            bg: "От какво дърво е изработена лодката-еднодръвка, представена в Arqueological експозиция?"
         },
         type: "choice",
         options: {
-            en: ["Black", "White", "Yellow", "Transparent"],
-            bg: ["черен", "бяло", "жълт", "прозрачен"]
+            en: ["Ash", "Walnut", "Elm"],
+            bg: ["ясен", "орех", "бряст"]
         },
-        answers: ["Yellow", "жълт"]
+        answers: ["Ash", "ясен"]
     },
-
     {
         text: {
-            en: "What shape is asbestos?",
-            bg: "Каква форма има азбестът"
+            en: "From which village is the dolmen located in the outdoor exhibition of the Archaeology Department?",
+            bg: "От землището на кое село е долменът, разположен във външната експозиция на Отдел Археология при Регионален исторически музей – Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Fibrous", "Cubic", "Oval", "Spiral"],
-            bg: ["влакнеста", "кубовидна", "овална", "спираловидна"]
+            en: ["Village Belevren", "Village Podvis", "Village Zvezdets"],
+            bg: ["село Белеврен", "село Подвис", "село Звездец"]
         },
-        answers: ["Fibrous", "влакнеста"]
+        answers: ["Village Belevren", "село Белеврен"]
     },
-
     {
         text: {
-            en: "Name of sea turtle:",
-            bg: "Кое е име на морска костенурка?"
+            en: "What is the first artificial material discovered by man?",
+            bg: "Коя е първата изкуствена материя, открита от човека?"
         },
         type: "choice",
         options: {
-            en: ["Carriage", "Phaeton", "Caretta", "Saddle"],
-            bg: ["каляска", "файтон", "карета", "седло"]
+            en: ["Ceramics", "Glass", "Metal"],
+            bg: ["керамика", "стъкло", "метал"]
         },
-        answers: ["Caretta", "карета"]
+        answers: ["Ceramics", "керамика"]
     },
-
     {
         text: {
-            en: "Geological periods are:",
-            bg: "Кои от изброените са геоложки периоди?"
+            en: "Which is the oldest Greek colony near Burgas?",
+            bg: "Коя е най-старата елинска колония в близост до гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Devonian, Silurian","Jurassic, Ordovician", "Limestone, Arial","Quaternary, Carbon", "Brittos, Devin"],
-            bg: ["девон, силур","юра, ордовик", "варовик, ариел","кватернер, карбон", "бритос, девин"]
+            en: ["Apollonia (today Sozopol)", "Anchialos (today Pomorie)", "Mesambria (today Nesebar)"],
+            bg: ["Аполония (дн. Созопол)", "Анхиало (дн. Поморие)", "Месамбрия (дн. Несебър)"]
         },
-        answers: ["Devonian, Silurian, Jurassic, Ordovician, Quaternary, Carbon", "девон, силур, юра, ордовик, кватернер, карбон"]
+        answers: ["Apollonia (today Sozopol)", "Аполония (дн. Созопол)"]
     },
-
     {
         text: {
-            en: "Aurelia aurita and Rhizostoma pulmo are species of:",
-            bg: "Aurelia aurita и Rhizostoma pulmo са видове..."
+            en: "In which region was the grave of the Thracian priestess Leseskepa discovered?",
+            bg: "В района на кой град е открит гробът на тракийската жрица Лесескепра?"
         },
         type: "choice",
         options: {
-            en: ["Jellyfish", "Greenery", "Migratory birds", "Butterflies"],
-            bg: ["медузи", "зеленики", "прелетни птици", "пеперуди"]
+            en: ["Anchialos (today Pomorie)", "Odesos (today Varna)", "Mesambria (today Nesebar)"],
+            bg: ["Анхиало (дн. Поморие)", "Одесос (дн. Варна)", "Месамбрия (дн. Несебър)"]
         },
-        answers: ["Jellyfish", "медузи"]
+        answers: ["Anchialos (today Pomorie)", "Анхиало (дн. Поморие)"]
     },
-
     {
         text: {
-            en: "True about mollusks:",
-            bg: "Кое е вярно за мекотелите?"
+            en: "What were the jewelry of the Thracian priestess Leseskepa made of?",
+            bg: "От какво са изработени накитите на тракийската жрица Лесескепра?"
         },
         type: "choice",
         options: {
-            en: ["Have head, body and foot", "Have cephalothorax and chelicerae", "Have fin and setae", "Shapeless"],
-            bg: ["имат глава, труп и крак", "имат главогръд и хелицери", "имат перка и четинки", "безформени са"]
+            en: ["Silver", "Bronze", "Gold"],
+            bg: ["сребро", "бронз", "злато"]
         },
-        answers: ["Have head, body and foot", "имат глава, труп и крак"]
+        answers: ["Gold", "злато"]
     },
-
     {
         text: {
-            en: "Worms are divided into:",
-            bg: "На какви се делят червеите?"
+            en: "Which scenes are most frequently depicted on red-figure Greek craters?",
+            bg: "Кои сцени най-често са изобразени върху червенофигурните гръцки кратери?"
         },
         type: "choice",
         options: {
-            en: ["Dry and mucous", "Many-eyed and blind", "Flat, round and segmented", "Spiny-backed and spiny-tailed"],
-            bg: ["сухи и слузести", "многоочни и слепи", "плоски, кръгли и прешленести", "шипобедрени и шипоопашати"]
+            en: ["Dionysian scenes", "Animal fights", "Children games"],
+            bg: ["дионисиеви сцени", "животински борби", "детски игри"]
         },
-        answers: ["Flat, round and segmented", "плоски, кръгли и прешленести"]
+        answers: ["Dionysian scenes", "дионисиеви сцени"]
     },
-
     {
         text: {
-            en: "Devil's Claw is:",
-            bg: "Какъв вид е Дяволският нокът?"
+            en: "Which attribute is typical in depicting god Dionysus?",
+            bg: "Кой атрибут е типичен при изобразяването на бог Дионис?"
         },
         type: "choice",
         options: {
-            en: ["Endemic plant in Strandja", "Elongated fungus on decaying matter", "Crystal", "Mussel"],
-            bg: ["ендемично растение в Странджа", "издължена гъба, растяща около гнила органика", "кристал", "мида"]
+            en: ["Thyrsus", "Lightning bolt", "Snake"],
+            bg: ["тирс", "светкавица", "змия"]
         },
-        answers: ["Mussel", "мида"]
+        answers: ["Thyrsus", "тирс"]
     },
-
     {
         text: {
-            en: "What is Canis lupus?",
-            bg: "Какво е Canis lupus?"
+            en: "What is an 'eschara'?",
+            bg: "Какво е „есхара?"
         },
         type: "choice",
         options: {
-            en: ["Rapan", "Hawk", "Wolf", "Mineral mining method"],
-            bg: ["рапан", "ястреб", "вълк", "метод за добиване на минерали"]
+            en: ["Thracian cult hearth", "Well", "Clay vessel"],
+            bg: ["тракийско култово огнище", "кладенец", "глинен съд"]
         },
-        answers: ["Wolf", "вълк"]
+        answers: ["Thracian cult hearth", "тракийско култово огнище"]
     },
-
     {
         text: {
-            en: "What are ammonites?",
-            bg: "Какво са амонитите?"
+            en: "Which ancient people mixed wine with water when consuming it?",
+            bg: "Кой древен народ смесва вино с вода при консумация?"
         },
         type: "choice",
         options: {
-            en: ["Prehistoric fungi", "Prehistoric mollusks", "Round minerals in copper mines", "Invasive moth species"],
-            bg: ["група праисторически гъби", "група праисторически мекотелите", "кръгли минерали", "инвазивни видове молци"]
+            en: ["Greeks", "Thracians", "Egyptians"],
+            bg: ["елини", "траки", "египтяни"]
         },
-        answers: ["Prehistoric mollusks", "група праисторически мекотелите"]
+        answers: ["Greeks", "елини"]
     },
-
     {
         text: {
-            en: "Hazelnut is:",
-            bg: "Орехчето е"
+            en: "From what material were amphorae most commonly made during Antiquity?",
+            bg: "От какъв материал най-често са изработвани амфорите през античността?"
         },
         type: "choice",
         options: {
-            en: ["Small flower", "Marine mussel", "Bird species", "Form from heat-treated quartz"],
-            bg: ["вид малко цвете", "вид морска мида", "вид птица", "форма образуваща се при третиране на кварцът"]
+            en: ["Clay (ceramics)", "Bronze", "Glass"],
+            bg: ["глина (керамика)", "бронз", "стъкло"]
         },
-        answers: ["Bird species", "вид птица"]
+        answers: ["Clay (ceramics)", "глина (керамика)"]
     },
-
     {
         text: {
-            en: "Lancelet is:",
-            bg: "Ланцетникът е"
+            en: "What is called the 'city of the dead'?",
+            bg: "Как се нарича „градът на мъртвите?"
         },
         type: "choice",
         options: {
-            en: ["Grassy plant with lance-shaped leaves", "Crustacean", "Carnivorous rodent", "Notochord animal"],
-            bg: ["тревисто растение с копиевидни листа", "ракообразно", "хищен гризач", "безчерепно хордово животно"]
+            en: ["Acropolis", "Temenos", "Necropolis"],
+            bg: ["акропол", "теменос", "некропол"]
         },
-        answers: ["Notochord animal", "безчерепно хордово животно"]
+        answers: ["Necropolis", "некропол"]
     },
-
     {
         text: {
-            en: "Forest Scops Owl is:",
-            bg: "Какво е Горската улулица?"
+            en: "What is the ancient Greek name for a large clay vessel for storing food products?",
+            bg: "Как на старогръцки език се нарича голям глинен съд за съхранение на хранителни продукти?"
         },
         type: "choice",
         options: {
-            en: ["Bird", "Shrub", "Fungus", "Rock formations"],
-            bg: ["птица", "храст", "гъба", "специфични скални образувания"]
+            en: ["Pithos", "Dolmen", "Sarcophagus"],
+            bg: ["питос", "долмен", "саркофаг"]
         },
-        answers: ["Bird", "птица"]
+        answers: ["Pithos", "питос"]
     },
-
     {
         text: {
-            en: "What is Grain Quail?",
-            bg: "Какво е Житното пиле?"
+            en: "Which ancient and medieval fortress of strategic importance to medieval Bulgaria is located near Burgas?",
+            bg: "Коя антична и средновековна крепост от стратегическо значение за средновековна България е разположена близо до гр. Бургас?"
         },
         type: "choice",
         options: {
-            en: ["Small sparrow-like bird", "Minerals found after plowing", "Large grasshopper relative, relative of locusts"],
-            bg: ["дребна врабчова птица", "минерали, откриващи се по нивите", "вид голямо насекомо, родственик на скакалците"]
+            en: ["Fortress near village Rusokastro", "Fortress near Shumen", "Fortress near village Kabyle"],
+            bg: ["крепост при с. Русокастро", "крепост при гр. Шумен", "крепост при с. Кабиле"]
         },
-        answers: ["Large grasshopper relative, relative of locusts", "вид голямо насекомо, родственик на скакалците"]
+        answers: ["Fortress near village Rusokastro", "крепост при с. Русокастро"]
     },
-
     {
         text: {
-            en: "At what age do stags shed their antlers?",
-            bg: "На колко години срандакът си сменя рогата?"
+            en: "Who were the new rulers of the Balkans in the XV century?",
+            bg: "Кои са новите господари на Балканите през XV в.?"
         },
         type: "choice",
         options: {
-            en: ["Every 3 years", "Every year", "Only once at maturity"],
-            bg: ["на всеки 3 години", "на всяка година", "сменя ги само веднъж"]
+            en: ["Ottoman Turks", "Vikings", "Teutonic Knights"],
+            bg: ["османските турци", "викингите", "тевтонските рицари"]
         },
-        answers: ["Every year", "на всяка година"]
+        answers: ["Ottoman Turks", "османските турци"]
+    },
+    {
+        text: {
+            en: "What was used as a writing medium by Romans?",
+            bg: "Какво се използвало като средство за писане при римляните?"
+        },
+        type: "choice",
+        options: {
+            en: ["Wax tablet and stylus", "Bird feathers", "Ballpoint pen"],
+            bg: ["восъчна табличка и стилус (остър писец)", "пера от птици", "химическа писалка"]
+        },
+        answers: ["Wax tablet and stylus", "восъчна табличка и стилус (остър писец)"]
+    },
+    {
+        text: {
+            en: "From which millennium date the lily-shaped vessels discovered in Burgas Settlement Mound?",
+            bg: "От кое хилядолетие датират лилиевидните съдове, открити в Селищна могила Бургас?"
+        },
+        type: "choice",
+        options: {
+            en: ["I millennium BC", "III millennium BC", "V millennium BC"],
+            bg: ["I хил.пр.Хр.", "III хил.пр.Хр.", "V хил.пр.Хр."]
+        },
+        answers: ["V millennium BC", "V хил.пр.Хр."]
+    },
+    {
+        text: {
+            en: "In which site were the lily-shaped vessels from V millennium BC found?",
+            bg: "В кой обект са открити лилиевидните съдове от V хил.пр.Хр., представени в Arqueological експозиция?"
+        },
+        type: "choice",
+        options: {
+            en: ["Burgas Settlement Mound", "Cherno More Settlement Mound", "Aytos Settlement Mound"],
+            bg: ["Селищна могила Бургас", "Селищна могила Черно море", "Селищна могила Айтос"]
+        },
+        answers: ["Burgas Settlement Mound", "Селищна могила Бургас"]
+    },
+    {
+        text: {
+            en: "From which millennium date the bracelets from Spondylus shell?",
+            bg: "От кое хилядолетие датират гривните от мида Spondylus?"
+        },
+        type: "choice",
+        options: {
+            en: ["I millennium BC", "III millennium BC", "V millennium BC"],
+            bg: ["I хил.пр.Хр.", "III хил.пр.Хр.", "V хил.пр.Хр."]
+        },
+        answers: ["V millennium BC", "V хил.пр.Хр."]
     }
 ];
 
-        // pick 5 random questions
-        function getRandomQuestions(arr,n){
-            const copy = arr.slice().sort(()=>Math.random()-0.5);
-            return copy.slice(0, Math.min(n, copy.length));
+        const allQuestions = questionList;
+        let selectedQuestions = [];
+        let currentQuestion = 0;
+        let answers = [];
+
+        function getRandomQuestions(arr, n) {
+            return arr
+                .map(q => ({ q, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .slice(0, n)
+                .map(obj => obj.q);
         }
 
-        let selectedQuestions = getRandomQuestions(questionList,5);
-        let currentQuestion = 0;
-        let answers = Array(selectedQuestions.length).fill('');
-        updateLangUI();
+        function updateProgressBar(currentIndex, total) {
+            const percent = total === 0 ? 0 : Math.round(((currentIndex + 1) / total) * 100);
+            document.getElementById('progress-bar').style.width = percent + '%';
 
-        function showQuestion(idx){
-            const q = selectedQuestions[idx];
-            const area = document.getElementById('question-area');
-            let html = `<div class="question"><label>${idx+1}. ${q.text[lang]}</label>`;
-            if(q.type === "choice"){
-                html += `<div style="color:#004d40;margin:.5rem 0">${translations[lang].options}</div>`;
-                q.options[lang].forEach((opt,i)=>{
-                    html += `<div class="option-row"><input type="radio" id="opt${i}" name="q" value="${opt}" ${answers[idx]===opt ? 'checked':''}><label for="opt${i}">${opt}</label></div>`;
+            const t = translations[lang];
+            document.getElementById('progress-text').textContent = t.progress(currentIndex + 1, total);
+        }
+
+        function showQuestion(idx) {
+            const qObj = selectedQuestions[idx];
+            const questionArea = document.getElementById('question-area');
+            const t = translations[lang];
+
+            let html = `<div class="question fade-in"><label>${idx + 1}. ${qObj.text[lang]}</label>`;
+
+            if (qObj.type === "choice") {
+                html += `<div class="choice-helper">${t.options}</div>`;
+                html += `<div class="option-group">`;
+                qObj.options[lang].forEach((opt, i) => {
+                    const checked = answers[idx] === opt ? "checked" : "";
+                    html += `
+                        <label class="option-wrap">
+                            <input
+                                class="option-radio"
+                                type="radio"
+                                id="opt${i}"
+                                name="q"
+                                value="${opt}"
+                                ${checked}
+                                aria-label="${opt}"
+                            >
+                            <span class="option-label">${opt}</span>
+                        </label>
+                    `;
                 });
+                html += `</div>`;
             } else {
-                html += `<div style="margin-top:.6rem"><input type="text" id="q" name="q" autocomplete="off" value="${answers[idx] ? answers[idx] : ''}"></div>`;
+                const storedValue = answers[idx] ? answers[idx] : '';
+                html += `<input type="text" id="q" name="q" autocomplete="off" value="${storedValue}" aria-label="Type your answer here">`;
             }
+
             html += `</div>`;
-            area.innerHTML = html;
-            // update progress
+            questionArea.innerHTML = html;
+
+            // Update title/subtitle and progress
+            document.getElementById('quiz-title').textContent = t.quizTime;
+            document.getElementById('quiz-subtitle').textContent = t.subtitle;
+            document.getElementById('next-btn').textContent = t.next;
+            document.getElementById('submit-btn').textContent = t.submit;
+
             updateProgressBar(idx, selectedQuestions.length);
 
-            // wire inputs
-            if(q.type === "choice"){
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (qObj.type === "choice") {
                 const radios = document.querySelectorAll('input[name="q"]');
-                radios.forEach(r=>{
-                    r.addEventListener('change', ()=>{
-                        document.getElementById('next-btn').disabled = !document.querySelector('input[name="q"]:checked');
-                        document.getElementById('submit-btn').disabled = !document.querySelector('input[name="q"]:checked');
-                    });
-                });
-                document.getElementById('next-btn').disabled = !document.querySelector('input[name="q"]:checked');
-                document.getElementById('submit-btn').disabled = !document.querySelector('input[name="q"]:checked');
+                const checkSelection = () => {
+                    const hasSelection = !!document.querySelector('input[name="q"]:checked');
+                    nextBtn.disabled = !hasSelection && idx < selectedQuestions.length - 1;
+                    submitBtn.disabled = !hasSelection && idx === selectedQuestions.length - 1;
+                };
+                radios.forEach(radio => radio.addEventListener('change', checkSelection));
+                checkSelection();
             } else {
                 const input = document.getElementById('q');
                 input.focus();
-                input.addEventListener('input', ()=>{
-                    const ok = input.value.trim().length>0;
-                    document.getElementById('next-btn').disabled = !ok;
-                    document.getElementById('submit-btn').disabled = !ok;
-                });
-                const ok = input.value.trim().length>0;
-                document.getElementById('next-btn').disabled = !ok;
-                document.getElementById('submit-btn').disabled = !ok;
+                const checkText = () => {
+                    const hasText = !!input.value.trim();
+                    nextBtn.disabled = !hasText && idx < selectedQuestions.length - 1;
+                    submitBtn.disabled = !hasText && idx === selectedQuestions.length - 1;
+                };
+                input.addEventListener('input', checkText);
+                checkText();
             }
 
-            document.getElementById('next-btn').style.display = (idx < selectedQuestions.length-1) ? 'inline-block' : 'none';
-            document.getElementById('submit-btn').style.display = (idx === selectedQuestions.length-1) ? 'inline-block' : 'none';
-            updateLangUI();
+            nextBtn.style.display = (idx < selectedQuestions.length - 1) ? 'inline-block' : 'none';
+            submitBtn.style.display = (idx === selectedQuestions.length - 1) ? 'inline-block' : 'none';
         }
 
-        function updateProgressBar(current,total){
-            const pct = total===0?0:Math.round(((current+1)/total)*100);
-            document.getElementById('progress-bar').style.width = pct + '%';
-        }
+        // Init
+        selectedQuestions = getRandomQuestions(allQuestions, 5);
+        answers = Array(selectedQuestions.length).fill('');
+        showQuestion(currentQuestion);
 
-        document.getElementById('next-btn').addEventListener('click', ()=>{
+        document.getElementById('next-btn').addEventListener('click', function() {
             const qObj = selectedQuestions[currentQuestion];
             let answer;
-            if(qObj.type === "choice"){
+
+            if (qObj.type === "choice") {
                 const checked = document.querySelector('input[name="q"]:checked');
-                if(!checked) return;
+                if (!checked) return;
                 answer = checked.value;
             } else {
                 const input = document.getElementById('q');
-                if(!input || !input.value.trim()){ input && input.focus(); return; }
+                if (!input.value.trim()) {
+                    input.focus();
+                    return;
+                }
                 answer = input.value.trim();
             }
+
             answers[currentQuestion] = answer;
             currentQuestion++;
             showQuestion(currentQuestion);
         });
 
-        // Enter key handling: move to next question if not last, otherwise allow submit
-        document.getElementById('quiz-form').addEventListener('keydown', function(e){
-            if(e.key === 'Enter'){
-                const active = document.activeElement;
-                // only intercept when focus inside text input or radio/checkbox
-                if(active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')){
-                    if(currentQuestion < selectedQuestions.length - 1){
-                        e.preventDefault();
-                        document.getElementById('next-btn').click();
-                    }
-                    // else allow submit
-                }
-            }
-        });
-
-        document.getElementById('quiz-form').addEventListener('submit', function(e){
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const qObj = selectedQuestions[currentQuestion];
             let answer;
-            if(qObj.type === "choice"){
+
+            if (qObj.type === "choice") {
                 const checked = document.querySelector('input[name="q"]:checked');
-                if(!checked) return;
+                if (!checked) return;
                 answer = checked.value;
             } else {
                 const input = document.getElementById('q');
-                if(!input || !input.value.trim()){ input && input.focus(); return; }
+                if (!input.value.trim()) {
+                    input.focus();
+                    return;
+                }
                 answer = input.value.trim();
             }
+
             answers[currentQuestion] = answer;
 
-            // save correct answers and user answers (AM-specific keys)
-            const correct = selectedQuestions.map(q=>q.answers);
-            localStorage.setItem('correctAnswersAM', JSON.stringify(correct));
-            localStorage.setItem('userAnswersAM', JSON.stringify(answers));
+            const correctAnswers = selectedQuestions.map(q => q.answers);
+            localStorage.setItem('correctAnswers', JSON.stringify(correctAnswers));
+            localStorage.setItem('userAnswers', JSON.stringify(answers));
             localStorage.setItem('language', lang);
-            window.location.href = 'quizResultsAM.html';
-            
+
+            window.location.href = 'quizResultsArchM.html';
         });
 
-        // initial render
-        showQuestion(currentQuestion);
-        updateLangUI();
+        // Enter key handling
+        document.getElementById('quiz-form').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const active = document.activeElement;
+                if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+                    if (currentQuestion < selectedQuestions.length - 1) {
+                        e.preventDefault();
+                        document.getElementById('next-btn').click();
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
