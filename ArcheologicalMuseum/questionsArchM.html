@@ -203,17 +203,50 @@
             justify-content: center;
             gap: 0.45rem;
             cursor: pointer;
+            padding: 0.6rem;
+            border-radius: 12px;
+            background-color: transparent;
+            transition: background-color 0.25s ease-out, transform 0.2s ease-out;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .option-wrap:active {
+            transform: scale(0.98);
         }
 
         .option-radio {
             transform: scale(1.2);
             margin: 0;
             accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .option-radio:checked + .option-label {
+            color: #2196F3;
+            font-weight: 700;
+        }
+
+        .option-radio:checked {
+            accent-color: #2196F3;
+        }
+
+        input[type="radio"]:checked ~ .option-label {
+            color: #2196F3;
+        }
+
+        .option-wrap input[type="radio"]:checked {
+            accent-color: #2196F3;
+        }
+
+        .option-wrap:has(input[type="radio"]:checked) {
+            background-color: rgba(33, 150, 243, 0.15);
         }
 
         .option-label {
             font-size: 0.98rem;
             color: var(--text-main);
+            transition: color 0.25s ease-out, font-weight 0.25s ease-out;
         }
 
         .btn-row {
