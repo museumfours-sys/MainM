@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the Ethnographical Museum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Playful + clean fonts (matches Archeological page) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            /* Ethnographic palette: light green, white, light red */
+            --bg-gradient-start: #eaf9ea; /* very light green */
+            --bg-gradient-end: #ffffff;   /* white */
+            --card-bg: #ffffff;
+            --accent: #e86b6b;           /* light red for highlights */
+            --accent-soft: #ffdede;      /* very pale red/pink */
+            --text-main: #2f3c2f;        /* dark greenish for readability */
+            --text-muted: #6b756b;       /* muted green tone */
+            --border-soft: #e6f0e6;      /* pale green border */
+            --success: #38a169;
+            --danger: #e76f51;
+            --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.06);
+            --radius-card: 28px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .welcome-container {
+            background: var(--card-bg);
+            padding: 2.6rem 2.2rem 2.3rem;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-soft);
+            max-width: 520px;
+            width: 100%;
+            border: 1px solid var(--border-soft);
+            text-align: center;
+            position: relative;
+            margin: 1.8rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .corner-icon {
+            position: absolute;
+            font-size: 1.7rem;
+            z-index: 2;
+            pointer-events: none;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .corner-top-left    { top: 10px; left: 14px; }
+        .corner-top-right   { top: 10px; right: 14px; }
+        .corner-bottom-left { bottom: 10px; left: 14px; }
+        .corner-bottom-right{ bottom: 10px; right: 14px; }
+
+        .lang-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .lang-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .pill { display: inline-flex; align-items: center; padding: 0.15rem 0.5rem; border-radius: 999px; background: rgba(255,255,255,0.85); border: 1px solid rgba(255,159,74,0.25); }
+
+        .lang-btn {
+            background: transparent;
+            color: var(--accent);
+            border: none;
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, transform 0.12s;
+        }
+
+        .lang-btn:hover { background: rgba(255, 239, 213, 0.9); transform: translateY(-1px); }
+        .lang-btn.active { background: var(--accent); color: #ffffff; }
+
+        .welcome-container h1 {
+            color: var(--accent);
+            margin: 1.4rem 0 0.9rem;
+            font-size: 2.1rem;
+            font-family: "Baloo 2", system-ui, sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.75rem; border-radius: 999px; background: #f0fff4; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.9rem; }
+
+        .subtitle-tag span.icon { font-size: 1.1rem; }
+
+        .welcome-container p { color: var(--text-main); font-size: 1rem; margin-bottom: 0.9rem; line-height: 1.5; }
+
+        .info-message { color: var(--text-muted); font-size: 0.95rem; margin: 1.2rem 0 1.6rem; background: #fff5f5; border-radius: 18px; padding: 0.9rem 1rem; border: 1px dashed var(--accent-soft); }
+
+        .start-btn {
+            background: linear-gradient(90deg, #e86b6b, #ff9a9a);
+            color: #ffffff;
+            border: none;
+            padding: 0.85rem 2.6rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            box-shadow: 0 10px 24px rgba(232, 107, 107, 0.36);
+            transition: background 0.18s, transform 0.16s, box-shadow 0.18s;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .start-btn:hover { background: linear-gradient(90deg, #dd5c5c, #ff8b8b); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(232, 107, 107, 0.48); }
+        .start-btn:active { transform: translateY(1px); box-shadow: 0 6px 18px rgba(232, 107, 107, 0.32); }
+
+        .helper-text { color: var(--text-muted); font-size: 0.92rem; margin-top: 0.9rem; }
+
+        @media (max-width: 600px) {
+            .welcome-container { padding: 1.4rem 1rem; border-radius: 18px; }
+            .welcome-container h1 { font-size: 1.45rem; }
+            .start-btn { padding: 0.7rem 1.6rem; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container" role="main" aria-labelledby="welcome-title">
+        <!-- Corner icons tailored for ethnography -->
+        <span class="corner-icon corner-top-left" title="Drum">🥁</span>
+        <span class="corner-icon corner-bottom-left" title="Shoe">👞</span>
+        <span class="corner-icon corner-bottom-right" title="Shawl">🧣</span>
+
+        <div class="lang-menu" aria-label="Language selection">
+            <div class="pill">
+                <span class="lang-label">Lang</span>
+                <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">EN</button>
+                <button id="btn-bg" class="lang-btn" onclick="setLanguage('bg')">BG</button>
+            </div>
+        </div>
+
+        <h1 id="welcome-title">Welcome to the Ethnographical Museum of Burgas!</h1>
+
+        <div class="subtitle-tag">
+            <span class="icon">🌾</span>
+            <span>Traditions • Crafts • Daily Life</span>
+        </div>
+
+        <p id="welcome-message">Explore a living tapestry of Burgas — folk costumes, instruments, household crafts and the stories of generations.</p>
+
+        <div class="info-message" id="info-message">Join our interactive quiz to learn about local traditions, weaving techniques, regional costumes and traditional music.</div>
+
+        <button class="start-btn" id="start-quiz" onclick="startQuiz()" aria-label="Start the quiz">Start the Quiz</button>
+
+        <div class="helper-text" id="helper-text">Tip: switch language using the buttons above. Your preference is saved locally.</div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Welcome to the Ethnographical Museum of Burgas!",
+                subtitle: "Traditions • Crafts • Daily Life",
+                message: "Explore a living tapestry of Burgas — folk costumes, instruments, household crafts and the stories of generations.",
+                info: "Join our interactive quiz to learn about local traditions, weaving techniques, regional costumes and traditional music.",
+                start: "Start the Quiz",
+                helper: "Tip: switch language using the buttons above. Your preference is saved locally."
+            },
+            bg: {
+                title: "Добре дошли в Етнографския музей на Бургас!",
+                subtitle: "Традиции • Занаяти • Ежедневие",
+                message: "Разгледайте жива мозайка от Бургас — носии, музикални инструменти, домашни занаятчийски умения и истории от поколения.",
+                info: "Вземете участие в интерактивна викторина за местните традиции, тъкачни техники, носии и народна музика.",
+                start: "Започнете викторината",
+                helper: "Съвет: превключете езика с бутоните горе. Предпочитанието ви се записва локално."
+            }
+        };
+
+        if (!localStorage.getItem('language')) localStorage.setItem('language','en');
+        let lang = localStorage.getItem('language') || 'en';
+
+        function setLanguage(selectedLang) {
+            lang = selectedLang;
+            localStorage.setItem('language', selectedLang);
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-bg').classList.toggle('active', lang === 'bg');
+            document.getElementById('welcome-title').textContent = translations[lang].title;
+            const subtitleEl = document.querySelector('.subtitle-tag span:last-child');
+            if (subtitleEl) subtitleEl.textContent = translations[lang].subtitle;
+            document.getElementById('welcome-message').textContent = translations[lang].message;
+            document.getElementById('info-message').textContent = translations[lang].info;
+            document.getElementById('start-quiz').textContent = translations[lang].start;
+            document.getElementById('helper-text').textContent = translations[lang].helper;
+        }
+
+        function startQuiz() {
+            localStorage.setItem('language', lang);
+            window.location.href = 'questionsEM.html';
+        }
+
+        window.onload = () => setLanguage(lang);
+    </script>
+</body>
+</html>
