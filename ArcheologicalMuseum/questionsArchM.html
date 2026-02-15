@@ -68,6 +68,7 @@
             align-items: stretch;
         }
 
+
         /* Corner icons in circles */
         .corner-icon {
             position: absolute;
@@ -369,10 +370,12 @@
                 flex-direction: row;
                 gap: 0.8rem;
                 flex-wrap: wrap;
+                justify-content: center;
             }
 
             .btn {
-                width: 100%;
+                flex: 1;
+                min-width: 120px;
                 padding: 0.85rem 1.2rem;
                 font-size: 0.9rem;
                 min-height: 44px;
@@ -1838,4 +1841,3 @@ const questionList = [
     </script>
 </body>
 </html>
-
